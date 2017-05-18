@@ -18,3 +18,11 @@ Use followed keys to move pacman for eating food and running away from the ghost
 - a : move pacman left
 
 the food is 1 point for each food. You'll win if you eat all the food
+
+<How to contribute>
+connect us here
+team leader : ekdud014@naver.com
+team member1 : angel5164312@naver.com
+team member2 : yeondiary@gmail.com
+team member3 : qpab7722@gamil.com
+
