@@ -7,3 +7,6 @@ pacman is a game of eating all the food while running away from the ghost.
 follows GPL v3
 it works in windows & mac
 
+<How to execute>
+download all the files and put it on your project
+
