@@ -10,3 +10,11 @@ it works in windows & mac
 <How to execute>
 download all the files and put it on your project
 
+<How to play>
+Use followed keys to move pacman for eating food and running away from the ghost!
+- w : move pacman up
+- s : move pacman down
+- d : move pacman right
+- a : move pacman left
+
+the food is 1 point for each food. You'll win if you eat all the food
