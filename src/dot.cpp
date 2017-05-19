@@ -1,4 +1,5 @@
 #include "dot.h"
+#include "sound.h"
 
 Dot::Dot(void)
 {
@@ -48,6 +49,7 @@ void Dot::drawDot(float pacmanX, float pacmanY){
 			temp.push_back(dot.at(i + 1));
 		}
 		else {
+			playSound(2);
 			points++;
 		}
 	}

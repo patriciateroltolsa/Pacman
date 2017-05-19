@@ -11,15 +11,16 @@
 
 using namespace std;
 
+#include "sound.h"
 #include "dot.h"
 #include "ghost.h"
 #include "map.h"
 #include "pacman.h"
 
-Ghost Blinky (10.5, 8.5, 1);
-Ghost Inky (13.5, 1.5, 2);
-Ghost Clyde (4.5, 6.5, 3);
-Ghost Pinky (2.5, 13.5, 4);
+Ghost Blinky(10.5, 8.5, 1);
+Ghost Inky(13.5, 1.5, 2);
+Ghost Clyde(4.5, 6.5, 3);
+Ghost Pinky(2.5, 13.5, 4);
 
 Map map;
 Pacman pacman;
@@ -69,6 +70,8 @@ void init(void){
 	bitmap.push_back({ true, false, true, true, true, true, false, true, true, false, true, true, true, false, true });
 	bitmap.push_back({ true, false, false, false, false, false, false, false, false, false, false, false, false, false, true });
 	bitmap.push_back({ true, true, true, true, true, true, true, true, true, true, true, true, true, true, true });
+
+	loadingSounds();
 }
 
 //Method to update the position of the monsters randomly
@@ -78,7 +81,7 @@ void updateGhost(Ghost *ghost){
 	int x2Quadrant = (int)((ghost->x + (2 / squareSize)) + (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
 	int y1Quadrant = (int)((ghost->y - (2 / squareSize)) - (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
 	int y2Quadrant = (int)((ghost->y + (2 / squareSize)) + (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
-	
+
 	//move him acording to its direction until he hits an obstacle
 	switch (ghost->id)
 	{
@@ -168,7 +171,7 @@ void resetGame(){
 	Inky.setGhost(13.5, 1.5, 2);
 	Clyde.setGhost(4.5, 6.5, 3);
 	Pinky.setGhost(2.5, 13.5, 4);
-	
+
 	points = 0;
 	for (int i = 0; i < 256; i++){
 		keyStates[i] = false;
@@ -230,7 +233,7 @@ void gameOver(){
 	int pacmanX = (int)(1.5 + xIncrement);
 	int pacmanY = (int)(1.5 + yIncrement);
 
-	if (pacmanX == (int) Blinky.x && pacmanY == (int) Blinky.y){
+	if (pacmanX == (int)Blinky.x && pacmanY == (int)Blinky.y){
 		over = true;
 	}
 	if (pacmanX == (int)Inky.x && pacmanY == (int)Inky.y){
@@ -365,8 +368,10 @@ void display(){
 			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
 
 			Sleep(10);
-		}
+			playSound(1);
+			}
 		else {
+			playSound(3);
 			resultsDisplay();
 		}
 	}
