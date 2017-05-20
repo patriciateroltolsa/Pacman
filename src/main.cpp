@@ -46,14 +46,18 @@ void viewerInit()
 }
 
 //Initializes the game with the appropiate information 
-void init(void){
+void init(void)
+{
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
+
 	//reset all keys
-	for (int i = 0; i < 256; i++){
+	for (int i = 0; i < 256; i++)
+	{
 		keyStates[i] = false;
 	}
+
 	//fill the bitmap with the obstacles
 	bitmap.push_back({ true, true, true, true, true, true, true, true, true, true, true, true, true, true, true });
 	bitmap.push_back({ true, false, false, false, false, false, false, false, false, false, false, false, false, false, true });
@@ -75,7 +79,8 @@ void init(void){
 }
 
 //Method to update the position of the monsters randomly
-void updateGhost(Ghost *ghost){
+void updateGhost(Ghost *ghost)
+{
 	//find the current position of the monster
 	int x1Quadrant = (int)((ghost->x - (2 / squareSize)) - (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
 	int x2Quadrant = (int)((ghost->x + (2 / squareSize)) + (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -86,45 +91,57 @@ void updateGhost(Ghost *ghost){
 	switch (ghost->id)
 	{
 	case 1:
-		if (!bitmap.at(x1Quadrant).at((int)ghost->y)){
+		if (!bitmap.at(x1Quadrant).at((int)ghost->y))
+		{
 			ghost->x -= 2 / squareSize;
 		}
-		else {
+		else
+		{
 			int current = ghost->id;
-			do{
+			do
+			{
 				ghost->id = (rand() % 4) + 1;
 			} while (current == (int)ghost->id);
 		}
 		break;
 	case 2:
-		if (!bitmap.at(x2Quadrant).at((int)ghost->y)){
+		if (!bitmap.at(x2Quadrant).at((int)ghost->y))
+		{
 			ghost->x += 2 / squareSize;
 		}
-		else {
+		else
+		{
 			int current = ghost->id;
-			do{
+			do
+			{
 				ghost->id = (rand() % 4) + 1;
 			} while (current == (int)ghost->id);
 		}
 		break;
 	case 3:
-		if (!bitmap.at((int)ghost->x).at(y1Quadrant)){
+		if (!bitmap.at((int)ghost->x).at(y1Quadrant))
+		{
 			ghost->y -= 2 / squareSize;
 		}
-		else {
+		else
+		{
 			int current = ghost->id;
-			do{
+			do
+			{
 				ghost->id = (rand() % 4) + 1;
 			} while (current == (int)ghost->id);
 		}
 		break;
 	case 4:
-		if (!bitmap.at((int)ghost->x).at(y2Quadrant)){
+		if (!bitmap.at((int)ghost->x).at(y2Quadrant))
+		{
 			ghost->y += 2 / squareSize;
 		}
-		else {
+		else
+		{
 			int current = ghost->id;
-			do{
+			do
+			{
 				ghost->id = (rand() % 4) + 1;
 			} while (current == (int)ghost->id);
 		}
@@ -143,28 +160,32 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	keyStates[key] = true;
 
-	//The direction the camera looks
+	//viewer 키보드 조작을 통해 바꾸기
 	if (key == 'x') viewer[0] -= 0.1;
 	if (key == 'X') viewer[0] += 0.1;
 	if (key == 'y') viewer[1] -= 0.1;
 	if (key == 'Y') viewer[1] += 0.1;
 	if (key == 'z') viewer[2] -= 0.1;
 	if (key == 'Z') viewer[2] += 0.1;
-	printf("viewer : %f, %f, %f\n", viewer[0], viewer[1], viewer[2]);
-    
+	//printf("viewer : %f, %f, %f\n", viewer[0], viewer[1], viewer[2]);
+
 	glutPostRedisplay();
 }
 
 //Method to unset the released key
-void keyUp(unsigned char key, int x, int y){
+void keyUp(unsigned char key, int x, int y)
+{
 	keyStates[key] = false;
 }
 
 //Method to reset all the variable necessaries to start the game again
-void resetGame(){
+void resetGame()
+{
 	over = false;
+
 	xIncrement = 0;
 	yIncrement = 0;
+
 	rotation = 0;
 
 	Blinky.setGhost(10.5, 8.5, 1);
@@ -173,123 +194,154 @@ void resetGame(){
 	Pinky.setGhost(2.5, 13.5, 4);
 
 	points = 0;
-	for (int i = 0; i < 256; i++){
+
+	for (int i = 0; i < 256; i++)
+	{
 		keyStates[i] = false;
 	}
+
 	dot.dotInit();
 }
 
 //Method to update the movement of the pacman according to the movement keys pressed
-void keyOperations(){
+void keyOperations()
+{
 	//get current position
 	float x = (1.5 + xIncrement) * squareSize;
 	float y = (1.5 + yIncrement) * squareSize;
+
 	//update according to keys pressed
-	if (keyStates['a']){
+	if (keyStates['a'])
+	{
 		x -= 2;
-		int x1Quadrant = (int)((x - 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!bitmap.at(x1Quadrant).at((int)y / squareSize)){
+		int x1Quadrant = (int)((x - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		if (!bitmap.at(x1Quadrant).at((int)y / squareSize))
+		{
 			xIncrement -= 2 / squareSize;
 			rotation = 2;
 		}
 	}
-	if (keyStates['d']){
+	if (keyStates['d'])
+	{
 		x += 2;
-		int x2Quadrant = (int)((x + 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!bitmap.at(x2Quadrant).at((int)y / squareSize)){
+		int x2Quadrant = (int)((x + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		if (!bitmap.at(x2Quadrant).at((int)y / squareSize))
+		{
 			xIncrement += 2 / squareSize;
 			rotation = 0;
 		}
 	}
-	if (keyStates['w']){
+	if (keyStates['w'])
+	{
 		y -= 2;
-		int y1Quadrant = (int)((y - 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!bitmap.at((int)x / squareSize).at(y1Quadrant)){
+		int y1Quadrant = (int)((y - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		if (!bitmap.at((int)x / squareSize).at(y1Quadrant))
+		{
 			yIncrement -= 2 / squareSize;
 			rotation = 3;
 		}
 	}
-	if (keyStates['s']){
+	if (keyStates['s'])
+	{
 		y += 2;
-		int y2Quadrant = (int)((y + 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!bitmap.at((int)x / squareSize).at(y2Quadrant)){
+		int y2Quadrant = (int)((y + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		if (!bitmap.at((int)x / squareSize).at(y2Quadrant))
+		{
 			yIncrement += 2 / squareSize;
 			rotation = 1;
 		}
 	}
-	if (keyStates[' ']){
-		if (!replay && over){
+	if (keyStates[' '])
+	{
+		if (!replay && over)
+		{
 			resetGame();
 			replay = true;
 		}
-		else if (replay && over){
+		else if (replay && over)
+		{
 			replay = false;
 		}
 	}
 }
 
 //Method to check if the game is over
-void gameOver(){
+void gameOver()
+{
 	int pacmanX = (int)(1.5 + xIncrement);
 	int pacmanY = (int)(1.5 + yIncrement);
 
-	if (pacmanX == (int)Blinky.x && pacmanY == (int)Blinky.y){
+	if (pacmanX == (int)Blinky.x && pacmanY == (int)Blinky.y)
+	{
 		over = true;
 	}
-	if (pacmanX == (int)Inky.x && pacmanY == (int)Inky.y){
+	if (pacmanX == (int)Inky.x && pacmanY == (int)Inky.y)
+	{
 		over = true;
 	}
-	if (pacmanX == (int)Clyde.x && pacmanY == (int)Clyde.y){
+	if (pacmanX == (int)Clyde.x && pacmanY == (int)Clyde.y)
+	{
 		over = true;
 	}
-	if (pacmanX == (int)Pinky.x && pacmanY == (int)Pinky.y){
+	if (pacmanX == (int)Pinky.x && pacmanY == (int)Pinky.y)
+	{
 		over = true;
 	}
-	if (points == 106){
+	if (points == 106)
+	{
 		over = true;
 	}
 }
 
 //Method to display the results of the game at the ends
-void resultsDisplay(){
+void resultsDisplay()
+{
 
 	viewerInit();
 
-	if (points == 106){
+	if (points == 106)
+	{
 		//Won
 		char* message = "*************************************";
 		glRasterPos2f(170, 250);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "CONGRATULATIONS, YOU WON! ";
 		glColor3f(1, 1, 1);
 		glRasterPos2f(200, 300);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "*************************************";
 		glRasterPos2f(170, 350);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "To start or restart the game, press the space key.";
 		glRasterPos2f(170, 550);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 	}
-	else {
+	else
+	{
 		//Lost
 		char* message = "*************************";
 		glRasterPos2f(210, 250);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "SORRY, YOU LOST ... ";
 		glColor3f(1, 1, 1);
 		glRasterPos2f(250, 300);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "*************************";
 		glRasterPos2f(210, 350);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "You got: ";
 		glRasterPos2f(260, 400);
 		while (*message)
@@ -303,6 +355,7 @@ void resultsDisplay(){
 		glRasterPos2f(385, 400);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 		message = "To start or restart the game, press the space key.";
 		glRasterPos2f(170, 550);
 		while (*message)
@@ -311,26 +364,32 @@ void resultsDisplay(){
 }
 
 //Method to display the starting instructions
-void welcomeScreen(){
+void welcomeScreen()
+{
 	viewerInit();
 	glClearColor(0, 0.2, 0.4, 1.0);
+
 	char* message = "*************************************";
 	glRasterPos2f(150, 200);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 	message = "PACMAN - by Patricia Terol";
 	glColor3f(1, 1, 1);
 	glRasterPos2f(225, 250);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 	message = "*************************************";
 	glRasterPos2f(150, 300);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
 	message = "To control Pacman use A to go right, D to go left, W to go up and S to go down.";
 	glRasterPos2f(50, 400);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
 	message = "To start or restart the game, press the space key.";
 	glRasterPos2f(170, 450);
 	while (*message)
@@ -338,20 +397,28 @@ void welcomeScreen(){
 }
 
 //Method to display the screen and its elements
-void display(){
+void display()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Left screen(3D and first person view)
 	glLoadIdentity();
 	gluLookAt(viewer[0], viewer[1], viewer[2], 0, 0, 0, 0, 1, 0);
 
-	if (points == 1){
+	if (points == 1)
+	{
 		over = false;
 	}
+
 	keyOperations();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	gameOver();
-	if (replay){
-		if (!over){
-            map.drawFloor();
+
+	if (replay)
+	{
+		if (!over)
+		{
+			map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement);
 			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
@@ -370,36 +437,87 @@ void display(){
 
 			Sleep(10);
 			playSound(1);
-			}
-		else {
+		}
+		else
+		{
 			playSound(3);
 			resultsDisplay();
 		}
 	}
-	else {
+	else
+	{
 		welcomeScreen();
 	}
+
+	//Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
+	glPushMatrix(); //Save root
+
+	glLoadIdentity();
+	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0); //Fixed the viewer
+
+	glTranslatef(750, 0, 0); //Move by 750 on the x axis
+
+	if (points == 1)
+	{
+		over = false;
+	}
+
+	keyOperations();
+
+	gameOver();
+
+	if (replay)
+	{
+		if (!over)
+		{
+			map.drawFloor();
+			map.drawLabyrinth();
+			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement);
+			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
+			points = dot.getPoint();
+			pacman.drawPacman(rotation);
+
+			updateGhost(&Blinky);
+			updateGhost(&Inky);
+			updateGhost(&Clyde);
+			updateGhost(&Pinky);
+
+			Blinky.drawGhost(1.0, 0.0, 0.0); //red
+			Inky.drawGhost(0.0, 1.0, 1.0); //cyan
+			Clyde.drawGhost(1.0, 0.3, 0.0); //orange
+			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
+
+			Sleep(10);
+			playSound(1);
+		}
+	}
+
+	glPopMatrix(); //Go to Root
+
 	glutSwapBuffers();
 }
 
 //Methdo to reshape the game is the screen size changes
-void reshape(int w, int h){
+void reshape(int w, int h) 
+{
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
-	glOrtho(0, 750, 750, 0, -750, 750);
+	glOrtho(0, 750 * 2, 750, 0, -750, 750);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
 
 //Main functions that controls the running of the game
-int main(int argc, char** argv){
+int main(int argc, char** argv) 
+{
 	//initialize and create the screen
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(750, 750);
-	glutInitWindowPosition(500, 50);
+	glutInitWindowSize(750 * 2, 750);
+	glutInitWindowPosition(0, 0);
 	glutCreateWindow("PACMAN - by Patricia Terol");
 
 	//define all the control functions
@@ -412,7 +530,8 @@ int main(int argc, char** argv){
 	//run the game
 	glEnable(GL_DEPTH_TEST);
 	init();
+
 	glutMainLoop();
+
 	return 0;
 }
-
