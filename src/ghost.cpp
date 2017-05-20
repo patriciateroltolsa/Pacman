@@ -8,7 +8,7 @@ Ghost::Ghost(float x, float y, int id)
 	squareSize = 50.0;
 }
 
-Ghost::~Ghost(void)
+Ghost::~Ghost()
 {
 
 }

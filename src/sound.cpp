@@ -77,7 +77,7 @@ void pauseSound(int num)
 	}
 }
 
-void freeSounds(void)
+void freeSounds()
 {
 	Mix_CloseAudio();
 	//Mix_FreeChunk(begin);

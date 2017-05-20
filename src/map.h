@@ -16,7 +16,6 @@ private:
 	float squareSize;
 
 public:
-
 	Map();
 	~Map();
 
