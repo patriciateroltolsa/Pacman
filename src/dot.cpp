@@ -1,13 +1,13 @@
 #include "dot.h"
 #include "sound.h"
 
-Dot::Dot(void)
+Dot::Dot()
 {
 	this->squareSize = 50.0;
 	this->points = 0;
 	dotInit();
 }
-Dot::~Dot(void)
+Dot::~Dot()
 {
 
 }

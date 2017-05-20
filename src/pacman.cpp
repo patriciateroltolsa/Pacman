@@ -1,13 +1,13 @@
 #include "pacman.h"
 
-Pacman::Pacman(void)
+Pacman::Pacman()
 {
 	this->squareSize = 50.0;
 	this->x = 0;
 	this->y = 0;
 }
 
-Pacman::~Pacman(void)
+Pacman::~Pacman()
 {
 
 }

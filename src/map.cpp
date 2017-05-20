@@ -19,12 +19,12 @@ vector<float> obstaclesBottom = {	2.5, 10.5, 2.5, 11.5, 2.5, 12.5, 3.5, 12.5,
 
 vector<float> border = { 0, 0, 15, 1, 15, 15, 14, 1, 0, 14, 15, 15, 1, 14, 0, 0 }; //coordinates of the border walls
 
-Map::Map(void)
+Map::Map()
 {
 	squareSize = 50.0;
 }
 
-Map::~Map(void)
+Map::~Map()
 {
 
 }

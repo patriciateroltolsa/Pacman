@@ -1,6 +1,25 @@
-// Author: Patricia Terol
-// Course: CSE 2050
-// Project: assign10
+/*
+
+	3D & 2D Pacman
+	Original: https://github.com/patriciateroltolsa/Pacman
+	Updates: https://github.com/ekdud014/OSS_pacman
+
+	Original Copyright (C) Patricia Terol
+	Updates Copyright (C) Yeji Na, Dayoung Park, Sojeong Lee, Seungyeon Lee
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, version 3.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 
 #include <Windows.h>
 #include <stdlib.h>
@@ -46,7 +65,7 @@ void viewerInit()
 }
 
 //Initializes the game with the appropiate information 
-void init(void)
+void init()
 {
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -160,7 +179,7 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	keyStates[key] = true;
 
-	//viewer 키보드 조작을 통해 바꾸기
+	//viewer change with keyboard input
 	if (key == 'x') viewer[0] -= 0.1;
 	if (key == 'X') viewer[0] += 0.1;
 	if (key == 'y') viewer[1] -= 0.1;
