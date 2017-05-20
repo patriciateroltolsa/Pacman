@@ -143,7 +143,7 @@ void keyPressed(unsigned char key, int x, int y)
 {
 	keyStates[key] = true;
 
-	//viewer 이동(카메라의 위치 변경)
+	//The direction the camera looks
 	if (key == 'x') viewer[0] -= 0.1;
 	if (key == 'X') viewer[0] += 0.1;
 	if (key == 'y') viewer[1] -= 0.1;
@@ -151,7 +151,7 @@ void keyPressed(unsigned char key, int x, int y)
 	if (key == 'z') viewer[2] -= 0.1;
 	if (key == 'Z') viewer[2] += 0.1;
 	printf("viewer : %f, %f, %f\n", viewer[0], viewer[1], viewer[2]);
-
+    
 	glutPostRedisplay();
 }
 
@@ -187,7 +187,7 @@ void keyOperations(){
 	//update according to keys pressed
 	if (keyStates['a']){
 		x -= 2;
-		int x1Quadrant = (int)((x - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		int x1Quadrant = (int)((x - 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
 		if (!bitmap.at(x1Quadrant).at((int)y / squareSize)){
 			xIncrement -= 2 / squareSize;
 			rotation = 2;
@@ -195,7 +195,7 @@ void keyOperations(){
 	}
 	if (keyStates['d']){
 		x += 2;
-		int x2Quadrant = (int)((x + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		int x2Quadrant = (int)((x + 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
 		if (!bitmap.at(x2Quadrant).at((int)y / squareSize)){
 			xIncrement += 2 / squareSize;
 			rotation = 0;
@@ -203,7 +203,7 @@ void keyOperations(){
 	}
 	if (keyStates['w']){
 		y -= 2;
-		int y1Quadrant = (int)((y - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		int y1Quadrant = (int)((y - 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
 		if (!bitmap.at((int)x / squareSize).at(y1Quadrant)){
 			yIncrement -= 2 / squareSize;
 			rotation = 3;
@@ -211,7 +211,7 @@ void keyOperations(){
 	}
 	if (keyStates['s']){
 		y += 2;
-		int y2Quadrant = (int)((y + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
+		int y2Quadrant = (int)((y + 25.0 *cos(360 * M_PI / 180.0)) / squareSize);
 		if (!bitmap.at((int)x / squareSize).at(y2Quadrant)){
 			yIncrement += 2 / squareSize;
 			rotation = 1;
@@ -351,6 +351,7 @@ void display(){
 	gameOver();
 	if (replay){
 		if (!over){
+            map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement);
 			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);

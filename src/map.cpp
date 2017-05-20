@@ -28,7 +28,18 @@ Map::~Map(void)
 {
 
 }
-
+//Method to draw the floor of map
+void Map::drawFloor()
+{
+    glPushMatrix();
+    
+    glColor3f(0, 0.2, 0.4);
+    glTranslated(15.0/2*squareSize, 15.0/2*squareSize, -5);
+    glScalef(1, 1, 0.01);
+    glutSolidCube(squareSize*15);
+    
+    glPopMatrix();
+}
 //Method to draw the obstacle course and the walls
 void Map::drawLabyrinth(){
 	//Border1
@@ -36,7 +47,7 @@ void Map::drawLabyrinth(){
 	{
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
-		glScalef(15, 1, 1); //x축으로 긴 직육면체
+		glScalef(15, 1, 1); //Long x-axis cube
 		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
 		glColor3f(0, 0, 0); glutWireCube(50);
 		glPopMatrix();
@@ -46,7 +57,7 @@ void Map::drawLabyrinth(){
 	{
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
-		glScalef(1, 15, 1); //y축으로 긴 직육면체
+        glScalef(1, 15, 1); //Long y-axis cube
 		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
 		glColor3f(0, 0, 0); glutWireCube(50);
 		glPopMatrix();
