@@ -51,6 +51,7 @@ float squareSize = 50.0; //size of one square on the game
 float xIncrement = 0; // x movement on pacman
 float yIncrement = 0; // y movement on pacman
 int rotation = 0; // orientation of pacman
+bool callOnce = false; // call function once
 
 vector<vector<bool>> bitmap; // 2d image of which squares are blocked and which are clear for pacman to move in 
 bool* keyStates = new bool[256]; // record of all keys pressed 
@@ -310,13 +311,22 @@ void gameOver()
 	{
 		over = true;
 	}
+	if (!over)
+	{
+		callOnce = false;
+	}
 }
 
 //Method to display the results of the game at the ends
 void resultsDisplay()
 {
-
 	viewerInit();
+
+	if (!callOnce)
+	{
+		setSoundInit();
+		callOnce = true;
+	}
 
 	if (points == 106)
 	{

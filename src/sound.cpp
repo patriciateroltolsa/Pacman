@@ -33,6 +33,12 @@ void setVolume(Mix_Chunk *chunk, float volume)
 	Mix_VolumeChunk(chunk, volume * MIX_MAX_VOLUME);
 }
 
+void setSoundInit()
+{
+	beginCount = 0;
+	deathCount = 0;
+}
+
 void playSound(int num)
 {
 	switch (num)

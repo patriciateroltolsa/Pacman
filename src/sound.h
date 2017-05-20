@@ -8,6 +8,8 @@ void loadingSounds();
 
 void freeSounds();
 
+void setSoundInit();
+
 void setVolume(Mix_Chunk *chunk, float volume);
 
 void playSound(int num);
