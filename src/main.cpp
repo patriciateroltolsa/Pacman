@@ -287,6 +287,9 @@ void keyOperations()
 			replay = false;
 		}
 	}
+	if (keyStates[27])
+		exit(-1);
+	
 }
 
 //Method to check if the game is over
