@@ -71,3 +71,8 @@ int Dot::getPoint()
 {
 	return this->points;
 }
+
+void Dot::setPoint(int n)
+{
+	this->points = n;
+}
