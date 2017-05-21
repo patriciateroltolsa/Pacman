@@ -51,6 +51,9 @@ float squareSize = 50.0; //size of one square on the game
 float xIncrement = 0; // x movement on pacman
 float yIncrement = 0; // y movement on pacman
 int rotation = 0; // orientation of pacman
+float angle = 0; // the angle(degree) of pacman's mouth
+float angle_Increment = 3;
+
 bool callOnce = false; // call function once
 
 vector<vector<bool>> bitmap; // 2d image of which squares are blocked and which are clear for pacman to move in 
@@ -443,13 +446,25 @@ void display()
 
 	gameOver();
 
+	//Increaseing the degree of pacman's mouth
+	angle += angle_Increment; //angle's range is 0~45degree
+	if (angle > 45) //change the signal of angle_Increment
+	{
+		angle_Increment = -angle_Increment;
+	}
+	else if (angle < 0)
+	{
+		angle_Increment = -angle_Increment;
+	}
+
+	//call the functions to draw
 	if (replay)
 	{
 		if (!over)
 		{
 			map.drawFloor();
 			map.drawLabyrinth();
-			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement);
+			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
 			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
 			pacman.drawPacman(rotation);
@@ -501,7 +516,7 @@ void display()
 		{
 			map.drawFloor();
 			map.drawLabyrinth();
-			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement);
+			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
 			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
 			pacman.drawPacman(rotation);
@@ -527,7 +542,7 @@ void display()
 }
 
 //Methdo to reshape the game is the screen size changes
-void reshape(int w, int h) 
+void reshape(int w, int h)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -540,7 +555,7 @@ void reshape(int w, int h)
 
 
 //Main functions that controls the running of the game
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
 	//initialize and create the screen
 	glutInit(&argc, argv);
