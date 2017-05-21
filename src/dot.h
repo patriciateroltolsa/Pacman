@@ -33,5 +33,7 @@ public:
 
 	int getPoint();
 
+	void setPoint(int n);
+
 };
 #endif

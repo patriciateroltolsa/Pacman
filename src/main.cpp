@@ -217,6 +217,7 @@ void resetGame()
 	Pinky.setGhost(2.5, 13.5, 4);
 
 	points = 0;
+	dot.setPoint(0);
 
 	for (int i = 0; i < 256; i++)
 	{
