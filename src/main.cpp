@@ -442,10 +442,8 @@ void display()
 	{
 		over = false;
 	}
-
-	keyOperations();
-
 	gameOver();
+	keyOperations();
 
 	//Increaseing the degree of pacman's mouth
 	angle += angle_Increment; //angle's range is 0~45degree
@@ -507,9 +505,8 @@ void display()
 		over = false;
 	}
 
-	keyOperations();
-
 	gameOver();
+	keyOperations();
 
 	if (replay)
 	{
