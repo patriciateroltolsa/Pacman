@@ -235,7 +235,7 @@ void keyOperations()
 	float y = (1.5 + yIncrement) * squareSize;
 
 	//update according to keys pressed
-	if (keyStates['a'])
+	if (keyStates['a']|| keyStates['A'])
 	{
 		x -= 2;
 		int x1Quadrant = (int)((x - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -245,7 +245,7 @@ void keyOperations()
 			rotation = 2;
 		}
 	}
-	if (keyStates['d'])
+	if (keyStates['d']|| keyStates['D'])
 	{
 		x += 2;
 		int x2Quadrant = (int)((x + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -255,7 +255,7 @@ void keyOperations()
 			rotation = 0;
 		}
 	}
-	if (keyStates['w'])
+	if (keyStates['w']|| keyStates['W'])
 	{
 		y -= 2;
 		int y1Quadrant = (int)((y - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -265,7 +265,7 @@ void keyOperations()
 			rotation = 3;
 		}
 	}
-	if (keyStates['s'])
+	if (keyStates['s']|| keyStates['S'])
 	{
 		y += 2;
 		int y2Quadrant = (int)((y + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -287,6 +287,9 @@ void keyOperations()
 			replay = false;
 		}
 	}
+	if (keyStates[27])
+		exit(-1);
+	
 }
 
 //Method to check if the game is over
