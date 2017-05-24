@@ -39,6 +39,7 @@ Map map;
 Pacman pacman;
 Dot dot;
 
+GLsizei ww, hh; //screen size
 bool replay = false; //check if starts a new game
 bool over = true; //check for the game to be over
 float squareSize = 50.0; //size of one square on the game
@@ -48,7 +49,7 @@ int rotation = 0; // orientation of pacman
 float angle = 0; // the angle(degree) of pacman's mouth
 float angle_Increment = 3;
 
-float xx=-21, yy=-3.2, zz=-30;
+float xx=-20, yy=-3.2, zz=-30;
 
 bool callOnce = false; // call function once
 
@@ -59,7 +60,7 @@ GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
 void viewerInit()
 {
-    viewer[0] = -31;
+    viewer[0] = -30;
     viewer[1] = -5.0;
     viewer[2] = -30;
     xx=-21, yy=-3.2, zz=-30;
@@ -458,7 +459,13 @@ void welcomeScreen()
 //Method to display the screen and its elements
 void display()
 {
-    glViewport(0, 0, (GLsizei)750, (GLsizei)750);
+    glViewport(0, 0, ww/2, hh);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glFrustum(-5, 5, 5, -5, 2, 20);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Left screen(3D and first person view)
@@ -492,7 +499,6 @@ void display()
         {
             glPushMatrix();
             
-            //glTranslated(-375, -375, -5);
             glRotated(90, 1, 0, 0);
             glScalef(0.1, 0.1, 0.1);
             glTranslated(-375, -375, -5);
@@ -514,29 +520,42 @@ void display()
             Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
             
             glPopMatrix();
-            Sleep(10);
+            //Sleep(10);
             playSound(1);
         }
         else
         {
+            glLoadIdentity();
+            gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
+            glPushMatrix();
+            glScalef(0.1, 0.1, 0.1);
+            glTranslated(-75, -350, -1);
             playSound(3);
             resultsDisplay();
+            glPopMatrix();
         }
     }
     else
     {
+        glLoadIdentity();
+        gluLookAt(0, 0, 10, 2, 0, 0, 0, 1, 0);
+        glPushMatrix();
+        glScalef(0.1, 0.1, 0.1);
+        glTranslated(-50, -300, -1);
         welcomeScreen();
+        glPopMatrix();
     }
     
     //Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
     glPushMatrix(); //Save root
     
-    glViewport(750, 0, (GLsizei)750*2, (GLsizei)750);
-    //glOrtho(750, 750 * 2, 750, 0, -750, 750);
+    glViewport(ww/2, 0, ww, hh);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, 750 * 2, 750, 0, -750, 750);
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0); //Fixed the viewer
-    
-    glTranslatef(750, 0, 0); //Move by 750 on the x axis
     
     if (points == 1)
     {
@@ -569,10 +588,11 @@ void display()
             Clyde.drawGhost(1.0, 0.3, 0.0); //orange
             Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
             
-            Sleep(10);
+            //Sleep(10);
             playSound(1);
         }
     }
+    
     
     glPopMatrix(); //Go to Root
     
@@ -582,13 +602,8 @@ void display()
 //Methdo to reshape the game is the screen size changes
 void reshape(int w, int h)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    //glViewport(0, 0, (GLsizei)w, (GLsizei)h);
-    glFrustum(-5, 5, 5, -5, 2, 20);
-    //glOrtho(0, 750 * 2, 750, 0, -750, 750);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    ww = w;
+    hh = h;
 }
 
 
