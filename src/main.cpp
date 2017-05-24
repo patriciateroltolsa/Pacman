@@ -520,7 +520,7 @@ void display()
             Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
             
             glPopMatrix();
-            //Sleep(10);
+            Sleep(10);
             playSound(1);
         }
         else
@@ -588,7 +588,7 @@ void display()
             Clyde.drawGhost(1.0, 0.3, 0.0); //orange
             Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
             
-            //Sleep(10);
+            Sleep(10);
             playSound(1);
         }
     }
