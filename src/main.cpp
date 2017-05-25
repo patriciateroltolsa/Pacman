@@ -240,10 +240,10 @@ void resetGame()
 void keyOperations()
 {
 	//get current position
-    float left_top[2]={(float)(1.1 + xIncrement) * squareSize, (float)(1.1 + yIncrement) * squareSize};
-    float left_bottom[2]={(float)(1.1 + xIncrement) * squareSize, (float)(1.9 + yIncrement) * squareSize};
-    float right_top[2]={(float)((1.9 + xIncrement) * squareSize), (float)((1.1 + yIncrement) * squareSize)};
-    float right_bottom[2]={(float)((1.9 + xIncrement) * squareSize), (float)((1.9 + yIncrement) * squareSize)};
+    float left_top[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize};
+    float left_bottom[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize};
+    float right_top[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize)};
+    float right_bottom[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize)};
 
 	//update according to keys pressed
 	if (keyStates['a'] || keyStates['A'])
