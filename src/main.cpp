@@ -229,7 +229,7 @@ void keyOperations()
     float y = (1.5 + yIncrement) * squareSize;
     
     //update according to keys pressed
-    if (keyStates['a'])
+    if (keyStates['a']|| keyStates['A'])
     {
         x -= 2;
         int x1Quadrant = (int)((x - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -247,7 +247,7 @@ void keyOperations()
             xx -=0.2;
         }
     }
-    if (keyStates['d'])
+    if (keyStates['d']|| keyStates['D'])
     {
         x += 2;
         int x2Quadrant = (int)((x + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -266,7 +266,7 @@ void keyOperations()
 
         }
     }
-    if (keyStates['w'])
+    if (keyStates['w']|| keyStates['W'])
     {
         y -= 2;
         int y1Quadrant = (int)((y - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -284,7 +284,7 @@ void keyOperations()
             zz -=0.2;
         }
     }
-    if (keyStates['s'])
+    if (keyStates['s']|| keyStates['S'])
     {
         y += 2;
         int y2Quadrant = (int)((y + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
@@ -302,6 +302,8 @@ void keyOperations()
             zz +=0.2;
         }
     }
+    if (keyStates[27])
+        exit(-1);
     if (keyStates[' '])
     {
         if (!replay && over)
@@ -477,9 +479,9 @@ void display()
         over = false;
     }
     
-    keyOperations();
-    
     gameOver();
+    
+    keyOperations();
     
     //Increaseing the degree of pacman's mouth
     angle += angle_Increment; //angle's range is 0~45degree
@@ -562,10 +564,11 @@ void display()
         over = false;
     }
     
-    keyOperations();
     
     gameOver();
     
+    keyOperations();
+
     
     if (replay)
     {
@@ -632,3 +635,4 @@ int main(int argc, char** argv)
     
     return 0;
 }
+
