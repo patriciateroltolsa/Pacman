@@ -54,24 +54,28 @@ The food is 1 point for each food. You'll win if you eat all the food
 https://github.com/patriciateroltolsa/Pacman
 
 ## How to contribute
+- Fork this project.
+- Create your branch name prefix_function&num_youname (refer issue#30)
+- Pull requests us! 
+
 Connect us here
 
-**team leader**  
+**Dayoung Park(team leader)**  
 
 * <ekdud014@naver.com>
 * https://github.com/ekdud014
 
-**team member1**
+**Sojeong Lee**
 
 * <angel5164312@naver.com>
 * https://github.com/SojeongLee
 
-**team member2**
+**Seungyeon Lee**
 
 * <yeondiary@gmail.com>
 * https://github.com/Seungyeon-Lee
 
-**team member3** 
+**Yeji Rha** 
 
 * <qpab7722@gamil.com>
 * https://github.com/qpab7722
