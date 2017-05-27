@@ -44,6 +44,10 @@ Use followed keys to move pacman for eating food and running away from the ghost
 
 * -a : move pacman left
 
+* space : restart the game
+
+* ESC : exit the game
+
 The food is 1 point for each food. You'll win if you eat all the food
 
 ## Original
