@@ -42,13 +42,19 @@ void Pacman::drawPacman(float rotation)
 	}*/
 
 	//Improved double for statement with one for statement
-	for (int i = 0+mouth_angle; i < 360-mouth_angle; i++) //mouth_angle's range is 0~45degree
-	{
-		glVertex2f(this->x*squareSize, this->y*squareSize);
-		x = 16 * cos((i + 90 * rotation) * M_PI / 180.0) + (this->x*squareSize);
-		y = 16 * sin((i + 90 * rotation) * M_PI / 180.0) + (this->y*squareSize);
-		glVertex2f(x, y);
-	}
+	//for (int i = 0+mouth_angle; i < 360-mouth_angle; i++) //mouth_angle's range is 0~45degree
+	//{
+	//	glVertex2f(this->x*squareSize, this->y*squareSize);
+	//	x = 16 * cos((i + 90 * rotation) * M_PI / 180.0) + (this->x*squareSize);
+	//	y = 16 * sin((i + 90 * rotation) * M_PI / 180.0) + (this->y*squareSize);
+	//	glVertex2f(x, y);
+	//}
 
-	glEnd();
+	//glEnd();
+
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 0.0);
+	glTranslatef(this->x*squareSize, this->y*squareSize, -10);
+	glutSolidSphere(15, 50, 50);
+	glPopMatrix();
 }
