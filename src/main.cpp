@@ -48,6 +48,7 @@ Dot dot;
 GLsizei ww, hh; //screen size
 bool replay = false; //check if starts a new game
 bool over = true; //check for the game to be over
+bool win = false; //check for win the game
 float squareSize = 50.0; //size of one square on the game
 float xIncrement = 0; // x movement on pacman
 float yIncrement = 0; // y movement on pacman
@@ -55,21 +56,23 @@ int rotation = 0; // orientation of pacman
 float angle = 0; // the angle(degree) of pacman's mouth
 float angle_Increment = 3;
 
+int mode = 2;
 float xx = -20, yy = -3.2, zz = -30;
 
 bool callOnce = false; // call function once
-
 bool* keyStates = new bool[256]; // record of all keys pressed
-int points = 0; // total points collected
-GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
+int points = 0; // total points collected
 int died = 0;//count died number of time
+
+GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
 void viewerInit()
 {
 	viewer[0] = -30;
 	viewer[1] = -5.0;
 	viewer[2] = -30;
+
 	xx = -21, yy = -3.2, zz = -30;
 }
 
@@ -198,6 +201,8 @@ void resetGame()
 
 	points = 0;
 	dot.setPoint(0);
+
+	viewerInit();
 
 	for (int i = 0; i < 256; i++)
 	{
@@ -383,7 +388,7 @@ void gameOver()
 	{
 		over = true;
 	}
-	
+
 	//Points are different when you eat by level.
 	if (map.level == 1)
 	{
@@ -403,16 +408,20 @@ void gameOver()
 			resetGame(); //Go to Level 3
 		}
 	}
-	if (map.level == 3)
+	if (map.level == 106)
 	{
-		if (points == 106)
+		if (points == 10)
+		{
+			win = true;
 			over = true;
+		}
 	}
 
 	if (!over)
 	{
 		callOnce = false;
 	}
+
 }
 
 //Method to display the results of the game at the ends
@@ -426,7 +435,7 @@ void resultsDisplay()
 		callOnce = true;
 	}
 
-	if (points == 106)
+	if (win)
 	{
 		//Won
 		char* message = "*************************************";
@@ -523,30 +532,41 @@ void welcomeScreen()
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 }
 
-//Method to display the screen and its elements
-void display()
+//Methdo to reshape the game is the screen size changes
+void reshape(int w, int h)
 {
-	glViewport(0, 0, ww / 2, hh);
+	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-5, 5, 5, -5, 2, 20);
+
+	if (mode == 1)
+		glFrustum(-5, 5, 5, -5, 2, 20);
+
+	if (mode == 2)
+		glOrtho(0, 750, 750, 0, -750, 750);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	ww = w;
+	hh = h;
+}
 
+//Method to display the screen and its elements
+void display()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+
 	//Left screen(3D and first person view)
-	glLoadIdentity();
+	mode = 1;
+	reshape(ww, hh);
 	gluLookAt(viewer[0], viewer[1], viewer[2], xx, yy, zz, 0, 1, 0);
 
 	if (points == 1)
-	{
 		over = false;
-	}
 
 	gameOver();
-
 	keyOperations();
 
 	//Increaseing the degree of pacman's mouth
@@ -566,7 +586,6 @@ void display()
 		if (!over)
 		{
 			glPushMatrix();
-
 			glRotated(90, 1, 0, 0);
 			glScalef(0.1, 0.1, 0.1);
 			glTranslated(-375, -375, -5);
@@ -589,22 +608,18 @@ void display()
 
 			glPopMatrix();
 			Sleep(10);
-			playSound(1);
-
 			if (died == 1) pacman.life = 2;
 			if (died == 2) pacman.life = 1;
 			if (died == 3) pacman.life = 0;
 		}
 		else
 		{
-			glLoadIdentity();
-			gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
-			glPushMatrix();
-			glScalef(0.1, 0.1, 0.1);
-			glTranslated(-75, -350, -1);
 			playSound(3);
+
+			mode = 2;
+			reshape(ww, hh);
+			glLoadIdentity();
 			resultsDisplay();
-			glPopMatrix();
 			if (pacman.life == 3) died = 1;
 			if (pacman.life == 2) died = 2;
 			if (pacman.life == 1) died = 3;
@@ -612,28 +627,69 @@ void display()
 	}
 	else
 	{
+		mode = 2;
+		reshape(ww, hh);
 		glLoadIdentity();
-		gluLookAt(0, 0, 10, 2, 0, 0, 0, 1, 0);
-		glPushMatrix();
-		glScalef(0.1, 0.1, 0.1);
-		glTranslated(-50, -300, -1);
 		welcomeScreen();
-		glPopMatrix();
 	}
 
-	glDisable(GL_DEPTH_TEST);
 	//Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
-	glPushMatrix(); //Save root
-
-	glViewport(ww / 2, 0, ww, hh);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 750 * 2, 750, 0, -750, 750);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+	mode = 2;
+	reshape(ww, hh);
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0); //Fixed the viewer
 
-    //Scaling by level
+	if (replay)
+	{
+		if (!over)
+		{
+			//print score
+			glPushMatrix();
+			glColor3f(1, 1, 1);
+			char *message = "score : ";
+			glRasterPos2f(20, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
+			string result = to_string(points);
+			message = (char*)result.c_str();
+			glRasterPos2f(80, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+			glPopMatrix();
+
+			//print life
+			glPushMatrix();
+			glColor3f(1.0, 1.0, 0.0);
+			if (pacman.life >= 1)
+			{
+				glTranslatef(squareSize - 20, squareSize - 25, 60);
+				pacman.drawLife();
+
+				if (pacman.life >= 2)
+				{
+					glTranslatef(30, 0, 0);
+					pacman.drawLife();
+
+					if (pacman.life >= 3)
+					{
+						glTranslatef(30, 0, 0);
+						pacman.drawLife();
+
+					}
+				}
+			}
+			glPopMatrix();
+		}
+	}
+
+	glPushMatrix(); //Save root
+	glScalef(0.3, 0.3, 0.3);
+	glTranslated(1600, 50, 0);
+
+	glPushMatrix();
+
+	//Scaling by level
 	if (map.level == 1)
 		glScalef(15.0 / 11.0, 15.0 / 11.0, 1); //11 by 11
 
@@ -643,71 +699,28 @@ void display()
 	else if (map.level == 3)
 		glScalef(1, 1, 1); //15 by 15
 
-	if (points == 1)
-	{
-		over = false;
-	}
-
 	gameOver();
-
 	keyOperations();
 
 	if (replay)
 	{
 		if (!over)
 		{
-			//map.drawFloor();
+			map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
 			dot.drawDot2D(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
 			pacman.drawPacman2D(rotation);
 
-			glPushMatrix();
-			glColor3f(1.0, 1.0, 0.0);
-			if (pacman.life >= 1)
-			{
-				glTranslatef(squareSize - 20, squareSize - 25, 60);
-				glutSolidSphere(10, 50, 50);
-
-				if (pacman.life >= 2)
-				{
-					glTranslatef(30, 0, 0);
-					glutSolidSphere(10, 50, 50);
-
-					if (pacman.life >= 3)
-					{
-						glTranslatef(30, 0, 0);
-						glutSolidSphere(10, 50, 50);
-
-					}
-				}
-			}
-
-			//print score
-			glPushMatrix();
-			char *message = "point :";
-			glColor3f(0, 0, 0);
-			if (map.level == 2) glScalef(15.0 / 13.0, 15.0 / 13.0, 1);
-			if (map.level == 3) glScalef(15.0 / 11.0, 15.0 / 11.0, 1);
-			glRasterPos3f(480, 30, 60);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
-
-			string result = to_string(points);
-			message = (char*)result.c_str();
-			glRasterPos3f(520, 30, 60);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
-
-			glPopMatrix();
-
 			updateGhost(&Blinky);
 			updateGhost(&Inky);
 			updateGhost(&Clyde);
 			updateGhost(&Pinky);
 
-			Blinky.drawGhost2D(1.0, 0.0, 0.0); //red
+			if (map.level >= 2)
+				Blinky.drawGhost2D(1.0, 0.0, 0.0); //red
+
 			Inky.drawGhost2D(0.0, 1.0, 1.0); //cyan
 			Clyde.drawGhost2D(1.0, 0.3, 0.0); //orange
 			Pinky.drawGhost2D(1.0, 0.0, 0.6); //magenta
@@ -717,18 +730,11 @@ void display()
 		}
 	}
 
-	glPopMatrix(); //Go to Root
+	glPopMatrix();
+	glPopMatrix();
 
 	glutSwapBuffers();
 }
-
-//Methdo to reshape the game is the screen size changes
-void reshape(int w, int h)
-{
-	ww = w;
-	hh = h;
-}
-
 
 //Main functions that controls the running of the game
 int main(int argc, char** argv)
@@ -736,7 +742,7 @@ int main(int argc, char** argv)
 	//initialize and create the screen
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(750 * 2, 750);
+	glutInitWindowSize(750, 750);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("PACMAN - by Patricia Terol");
 
