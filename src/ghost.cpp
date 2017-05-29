@@ -44,7 +44,7 @@ void Ghost::drawGhost2D(float r, float g, float b)
 	glBegin(GL_POINTS);
 	glColor3f(0, 0.2, 0.4);
 
-	glPointSize(5.0);
+	glPointSize(2.0);
 	//draw eyes and legs
 	glVertex2f((this->x*squareSize) - 11, (this->y*squareSize) + 14); //legs
 	glVertex2f((this->x*squareSize) - 1, (this->y*squareSize) + 14); //legs

@@ -79,7 +79,7 @@ void Dot::drawDot2D(float pacmanX, float pacmanY){
 		}
 	}
 	dot.swap(temp);
-	glPointSize(5.0);
+	glPointSize(2.0);
 	glBegin(GL_POINTS);
 	glColor3f(1.0, 1.0, 1.0);
 	//draw all the food avilable
@@ -114,8 +114,8 @@ void Dot::drawDot3D(float pacmanX, float pacmanY)
 	{
 		glPushMatrix();
 		glTranslatef(dot.at(j)*squareSize, dot.at(j + 1)*squareSize, -1);
-		glColor3f(1.0, 1.0, 1.0); glutSolidSphere(10, 10, 10);
-		glColor3f(0, 0, 0); glutWireSphere(10.1, 5, 5); // black wire
+		glColor3f(1.0, 1.0, 1.0); glutSolidSphere(3, 10, 10);
+		//glColor3f(0, 0, 0); glutWireSphere(10.1, 5, 5); // black wire
 		glPopMatrix();
 	}
 	glEnd();
