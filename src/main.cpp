@@ -63,6 +63,8 @@ bool* keyStates = new bool[256]; // record of all keys pressed
 int points = 0; // total points collected
 GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
+int died = 0;//count died number of time
+
 void viewerInit()
 {
 	viewer[0] = -30;
@@ -240,105 +242,105 @@ void resetGame()
 void keyOperations()
 {
 	//get current position
-    float left_top[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize};
-    float left_bottom[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize};
-    float right_top[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize)};
-    float right_bottom[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize)};
+	float left_top[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize };
+	float left_bottom[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize };
+	float right_top[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize) };
+	float right_bottom[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize) };
 
 	//update according to keys pressed
 	if (keyStates['a'] || keyStates['A'])
 	{
-        left_top[0] -= 2;
-        left_bottom[0] -= 2;
-        int x1Quadrant = (int)((left_top[0]) / squareSize);
-        if (!map.bitmap.at(x1Quadrant).at((int)left_top[1] / squareSize))
+		left_top[0] -= 2;
+		left_bottom[0] -= 2;
+		int x1Quadrant = (int)((left_top[0]) / squareSize);
+		if (!map.bitmap.at(x1Quadrant).at((int)left_top[1] / squareSize))
 		{
-            x1Quadrant = (int)((left_bottom[0]) / squareSize);
-            if (!map.bitmap.at(x1Quadrant).at((int)left_bottom[1] / squareSize))
-            {
-                xIncrement -= 2 / squareSize;
-                rotation = 2;
+			x1Quadrant = (int)((left_bottom[0]) / squareSize);
+			if (!map.bitmap.at(x1Quadrant).at((int)left_bottom[1] / squareSize))
+			{
+				xIncrement -= 2 / squareSize;
+				rotation = 2;
 
-                //camera direction set
-                zz = viewer[2];
-                xx = viewer[0] - 10;
+				//camera direction set
+				zz = viewer[2];
+				xx = viewer[0] - 10;
 
-                //camera location set
-                viewer[0] -= 0.2;
-                xx -= 0.2;
-            }
+				//camera location set
+				viewer[0] -= 0.2;
+				xx -= 0.2;
+			}
 		}
 	}
 	if (keyStates['d'] || keyStates['D'])
 	{
-        right_top[0]+=2;
-        right_bottom[0]+=2;
-        
-        int x2Quadrant = (int)((right_top[0]) / squareSize);
-        if (!map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize))
+		right_top[0] += 2;
+		right_bottom[0] += 2;
+
+		int x2Quadrant = (int)((right_top[0]) / squareSize);
+		if (!map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize))
 		{
-            if (!map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize))
-            {
-                xIncrement += 2 / squareSize;
-                rotation = 0;
+			if (!map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize))
+			{
+				xIncrement += 2 / squareSize;
+				rotation = 0;
 
-                //camera direction set
-                zz = viewer[2];
-                xx = viewer[0] + 10;
+				//camera direction set
+				zz = viewer[2];
+				xx = viewer[0] + 10;
 
-                //camera location set
-                viewer[0] += 0.2;
-                xx += 0.2;
-            }
+				//camera location set
+				viewer[0] += 0.2;
+				xx += 0.2;
+			}
 
 		}
 	}
 	if (keyStates['w'] || keyStates['W'])
 	{
-        left_top[1]-=2;
-        right_top[1]-=2;
-        
-        int y1Quadrant = (int)((left_top[1]) / squareSize);
-        if (!map.bitmap.at((int)left_top[0] / squareSize).at(y1Quadrant))
-        {
-            y1Quadrant = (int)((right_top[1]) / squareSize);
-            if (!map.bitmap.at((int)right_top[0] / squareSize).at(y1Quadrant))
-            {
-                yIncrement -= 2 / squareSize;
-                rotation = 3;
+		left_top[1] -= 2;
+		right_top[1] -= 2;
 
-                //camera direction set
-                zz = viewer[2] - 10;
-                xx = viewer[0];
+		int y1Quadrant = (int)((left_top[1]) / squareSize);
+		if (!map.bitmap.at((int)left_top[0] / squareSize).at(y1Quadrant))
+		{
+			y1Quadrant = (int)((right_top[1]) / squareSize);
+			if (!map.bitmap.at((int)right_top[0] / squareSize).at(y1Quadrant))
+			{
+				yIncrement -= 2 / squareSize;
+				rotation = 3;
 
-                //camera location set
-                viewer[2] -= 0.2;
-                zz -= 0.2;
-            }
+				//camera direction set
+				zz = viewer[2] - 10;
+				xx = viewer[0];
+
+				//camera location set
+				viewer[2] -= 0.2;
+				zz -= 0.2;
+			}
 		}
 	}
 	if (keyStates['s'] || keyStates['S'])
 	{
-        left_bottom[1]+=2;
-        right_bottom[1]+=2;
-        
-        int y1Quadrant = (int)((left_bottom[1]) / squareSize);
-        if (!map.bitmap.at((int)left_bottom[0] / squareSize).at(y1Quadrant))
+		left_bottom[1] += 2;
+		right_bottom[1] += 2;
+
+		int y1Quadrant = (int)((left_bottom[1]) / squareSize);
+		if (!map.bitmap.at((int)left_bottom[0] / squareSize).at(y1Quadrant))
 		{
-            y1Quadrant = (int)((right_bottom[1]) / squareSize);
-            if (!map.bitmap.at((int)right_bottom[0] / squareSize).at(y1Quadrant))
-            {
-                yIncrement += 2 / squareSize;
-                rotation = 1;
+			y1Quadrant = (int)((right_bottom[1]) / squareSize);
+			if (!map.bitmap.at((int)right_bottom[0] / squareSize).at(y1Quadrant))
+			{
+				yIncrement += 2 / squareSize;
+				rotation = 1;
 
-                //camera direction set
-                zz = viewer[2] + 10;
-                xx = viewer[0];
+				//camera direction set
+				zz = viewer[2] + 10;
+				xx = viewer[0];
 
-                //camera location set
-                viewer[2] += 0.2;
-                zz += 0.2;
-            }
+				//camera location set
+				viewer[2] += 0.2;
+				zz += 0.2;
+			}
 		}
 	}
 	if (keyStates[27])
@@ -533,6 +535,7 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glEnable(GL_DEPTH_TEST);
 	//Left screen(3D and first person view)
 	glLoadIdentity();
 	gluLookAt(viewer[0], viewer[1], viewer[2], xx, yy, zz, 0, 1, 0);
@@ -570,23 +573,27 @@ void display()
 			map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
-			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
+			dot.drawDot3D(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
-			pacman.drawPacman(rotation);
+			pacman.drawPacman3D(rotation);
 
 			updateGhost(&Blinky);
 			updateGhost(&Inky);
 			updateGhost(&Clyde);
 			updateGhost(&Pinky);
 
-			Blinky.drawGhost(1.0, 0.0, 0.0); //red
-			Inky.drawGhost(0.0, 1.0, 1.0); //cyan
-			Clyde.drawGhost(1.0, 0.3, 0.0); //orange
-			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
+			Blinky.drawGhost3D(1.0, 0.0, 0.0); //red
+			Inky.drawGhost3D(0.0, 1.0, 1.0); //cyan
+			Clyde.drawGhost3D(1.0, 0.3, 0.0); //orange
+			Pinky.drawGhost3D(1.0, 0.0, 0.6); //magenta
 
 			glPopMatrix();
 			Sleep(10);
 			playSound(1);
+
+			if (died == 1) pacman.life = 2;
+			if (died == 2) pacman.life = 1;
+			if (died == 3) pacman.life = 0;
 		}
 		else
 		{
@@ -598,6 +605,9 @@ void display()
 			playSound(3);
 			resultsDisplay();
 			glPopMatrix();
+			if (pacman.life == 3) died = 1;
+			if (pacman.life == 2) died = 2;
+			if (pacman.life == 1) died = 3;
 		}
 	}
 	else
@@ -611,6 +621,7 @@ void display()
 		glPopMatrix();
 	}
 
+	glDisable(GL_DEPTH_TEST);
 	//Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
 	glPushMatrix(); //Save root
 
@@ -645,22 +656,61 @@ void display()
 	{
 		if (!over)
 		{
-			map.drawFloor();
+			//map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
-			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
+			dot.drawDot2D(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
-			pacman.drawPacman(rotation);
+			pacman.drawPacman2D(rotation);
+
+			glPushMatrix();
+			glColor3f(1.0, 1.0, 0.0);
+			if (pacman.life >= 1)
+			{
+				glTranslatef(squareSize - 20, squareSize - 25, 60);
+				glutSolidSphere(10, 50, 50);
+
+				if (pacman.life >= 2)
+				{
+					glTranslatef(30, 0, 0);
+					glutSolidSphere(10, 50, 50);
+
+					if (pacman.life >= 3)
+					{
+						glTranslatef(30, 0, 0);
+						glutSolidSphere(10, 50, 50);
+
+					}
+				}
+			}
+
+			//print score
+			glPushMatrix();
+			char *message = "point :";
+			glColor3f(0, 0, 0);
+			if (map.level == 2) glScalef(15.0 / 13.0, 15.0 / 13.0, 1);
+			if (map.level == 3) glScalef(15.0 / 11.0, 15.0 / 11.0, 1);
+			glRasterPos3f(480, 30, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
+			string result = to_string(points);
+			message = (char*)result.c_str();
+			glRasterPos3f(520, 30, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
+			glPopMatrix();
 
 			updateGhost(&Blinky);
 			updateGhost(&Inky);
 			updateGhost(&Clyde);
 			updateGhost(&Pinky);
 
-			Blinky.drawGhost(1.0, 0.0, 0.0); //red
-			Inky.drawGhost(0.0, 1.0, 1.0); //cyan
-			Clyde.drawGhost(1.0, 0.3, 0.0); //orange
-			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
+			Blinky.drawGhost2D(1.0, 0.0, 0.0); //red
+			Inky.drawGhost2D(0.0, 1.0, 1.0); //cyan
+			Clyde.drawGhost2D(1.0, 0.3, 0.0); //orange
+			Pinky.drawGhost2D(1.0, 0.0, 0.6); //magenta
 
 			Sleep(10);
 			playSound(1);
@@ -698,7 +748,6 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
 	//run the game
-	glEnable(GL_DEPTH_TEST);
 	init();
 
 	glutMainLoop();
