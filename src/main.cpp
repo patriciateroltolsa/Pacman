@@ -48,6 +48,7 @@ Dot dot;
 GLsizei ww, hh; //screen size
 bool replay = false; //check if starts a new game
 bool over = true; //check for the game to be over
+bool win = false; //check for win the game
 float squareSize = 50.0; //size of one square on the game
 float xIncrement = 0; // x movement on pacman
 float yIncrement = 0; // y movement on pacman
@@ -387,6 +388,7 @@ void gameOver()
 	{
 		if (points == 55) //If you check it works well, then modify 55 to smaller number.
 		{
+			playSound(4);
 			map.level = 2;
 			//over = true;
 			resetGame(); //Go to Level 2
@@ -396,6 +398,7 @@ void gameOver()
 	{
 		if (points == 74) //74
 		{
+			playSound(4);
 			map.level = 3;
 			//over = true;
 			resetGame(); //Go to Level 3
@@ -404,7 +407,10 @@ void gameOver()
 	if (map.level == 3)
 	{
 		if (points == 106)
+		{
+			win = true;
 			over = true;
+		}
 	}
 
 	if (!over)
@@ -424,7 +430,7 @@ void resultsDisplay()
 		callOnce = true;
 	}
 
-	if (points == 106)
+	if (win)
 	{
 		//Won
 		char* message = "*************************************";
@@ -595,7 +601,10 @@ void display()
 			glPushMatrix();
 			glScalef(0.1, 0.1, 0.1);
 			glTranslated(-75, -350, -1);
-			playSound(3);
+			if (!win)
+				playSound(3);
+			else
+				playSound(5);
 			resultsDisplay();
 			glPopMatrix();
 		}
