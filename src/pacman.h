@@ -24,5 +24,7 @@ public:
 	void drawPacman2D(float rotation);
 	void drawPacman3D(float rotation);
 
+	void drawLife();
+
 };
 #endif

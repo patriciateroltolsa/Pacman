@@ -40,6 +40,26 @@ void Pacman::drawPacman2D(float rotation)
 	glEnd();
 }
 
+void Pacman::drawLife(){
+
+	int x, y;
+	glBegin(GL_LINES);
+	glColor3f(1.0, 1.0, 0.0);
+	for (int k = 0; k < 32; k++){
+		x = (float)k / 2.5 * cos((30) * M_PI / 180.0);
+		y = (float)k / 2.5* sin((30) * M_PI / 180.0);
+		for (int i = 30; i < 330; i++){
+			glVertex2f(x, y);
+			x = (float)k / 2.5 * cos((i)* M_PI / 180.0);
+			y = (float)k / 2.5 * sin((i)* M_PI / 180.0);
+			glVertex2f(x, y);
+		}
+	}
+	glEnd();
+}
+
+
+
 void Pacman::drawPacman3D(float rotation)
 {
 	glPushMatrix();
