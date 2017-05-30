@@ -240,107 +240,139 @@ void resetGame()
 void keyOperations()
 {
 	//get current position
-    float left_top[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize};
-    float left_bottom[2]={(float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize};
-    float right_top[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize)};
-    float right_bottom[2]={(float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize)};
+	float left_top[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize };
+	float left_bottom[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize };
+	float right_top[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize) };
+	float right_bottom[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize) };
 
 	//update according to keys pressed
-	if (keyStates['a'] || keyStates['A'])
+	if (keyStates['a'] || keyStates['A']) //rotate to left
 	{
-        left_top[0] -= 2;
-        left_bottom[0] -= 2;
-        int x1Quadrant = (int)((left_top[0]) / squareSize);
-        if (!map.bitmap.at(x1Quadrant).at((int)left_top[1] / squareSize))
+		keyStates['a'] = false; keyStates['A'] = false;
+
+		if (rotation == 1)          rotation = 0;
+		else if (rotation == 2)  	rotation = 1;
+		else if (rotation == 3)  	rotation = 2;
+		else if (rotation == 0)  	rotation = 3;
+	}
+	if (keyStates['d'] || keyStates['D']) //rotate to right
+	{
+		keyStates['d'] = false; keyStates['D'] = false;
+
+		if (rotation == 1)          rotation = 2;
+		else if (rotation == 2)  	rotation = 3;
+		else if (rotation == 3)  	rotation = 0;
+		else if (rotation == 0)  	rotation = 1;
+	}
+	if (keyStates['s'] || keyStates['S']) //rotate to back
+	{
+		keyStates['s'] = false; keyStates['S'] = false;
+
+		if (rotation == 1)          rotation = 3;
+		else if (rotation == 2)  	rotation = 0;
+		else if (rotation == 3)  	rotation = 1;
+		else if (rotation == 0)  	rotation = 2;
+	}
+	if (keyStates['w'] || keyStates['W']) //go straight 
+	{
+		if (rotation == 0)
 		{
-            x1Quadrant = (int)((left_bottom[0]) / squareSize);
-            if (!map.bitmap.at(x1Quadrant).at((int)left_bottom[1] / squareSize))
-            {
-                xIncrement -= 2 / squareSize;
-                rotation = 2;
+			right_top[0] += 2;
+			right_bottom[0] += 2;
 
-                //camera direction set
-                zz = viewer[2];
-                xx = viewer[0] - 10;
+			int x2Quadrant = (int)((right_top[0]) / squareSize);
+			if (!map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize))
+			{
+				if (!map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize))
+				{
+					xIncrement += 2 / squareSize;
+					//rotation = 0;
 
-                //camera location set
-                viewer[0] -= 0.2;
-                xx -= 0.2;
-            }
+					//camera direction set
+					zz = viewer[2];
+					xx = viewer[0] + 10;
+
+					//camera location set
+					viewer[0] += 0.2;
+					xx += 0.2;
+				}
+			}
 		}
-	}
-	if (keyStates['d'] || keyStates['D'])
-	{
-        right_top[0]+=2;
-        right_bottom[0]+=2;
-        
-        int x2Quadrant = (int)((right_top[0]) / squareSize);
-        if (!map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize))
+		else if (rotation == 1)
 		{
-            if (!map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize))
-            {
-                xIncrement += 2 / squareSize;
-                rotation = 0;
+			left_bottom[1] += 2;
+			right_bottom[1] += 2;
 
-                //camera direction set
-                zz = viewer[2];
-                xx = viewer[0] + 10;
+			int y1Quadrant = (int)((left_bottom[1]) / squareSize);
+			if (!map.bitmap.at((int)left_bottom[0] / squareSize).at(y1Quadrant))
+			{
+				y1Quadrant = (int)((right_bottom[1]) / squareSize);
+				if (!map.bitmap.at((int)right_bottom[0] / squareSize).at(y1Quadrant))
+				{
+					yIncrement += 2 / squareSize;
+					//rotation = 1;
 
-                //camera location set
-                viewer[0] += 0.2;
-                xx += 0.2;
-            }
+					//camera direction set
+					zz = viewer[2] + 10;
+					xx = viewer[0];
 
+					//camera location set
+					viewer[2] += 0.2;
+					zz += 0.2;
+				}
+			}
 		}
-	}
-	if (keyStates['w'] || keyStates['W'])
-	{
-        left_top[1]-=2;
-        right_top[1]-=2;
-        
-        int y1Quadrant = (int)((left_top[1]) / squareSize);
-        if (!map.bitmap.at((int)left_top[0] / squareSize).at(y1Quadrant))
-        {
-            y1Quadrant = (int)((right_top[1]) / squareSize);
-            if (!map.bitmap.at((int)right_top[0] / squareSize).at(y1Quadrant))
-            {
-                yIncrement -= 2 / squareSize;
-                rotation = 3;
-
-                //camera direction set
-                zz = viewer[2] - 10;
-                xx = viewer[0];
-
-                //camera location set
-                viewer[2] -= 0.2;
-                zz -= 0.2;
-            }
-		}
-	}
-	if (keyStates['s'] || keyStates['S'])
-	{
-        left_bottom[1]+=2;
-        right_bottom[1]+=2;
-        
-        int y1Quadrant = (int)((left_bottom[1]) / squareSize);
-        if (!map.bitmap.at((int)left_bottom[0] / squareSize).at(y1Quadrant))
+		else if (rotation == 2)
 		{
-            y1Quadrant = (int)((right_bottom[1]) / squareSize);
-            if (!map.bitmap.at((int)right_bottom[0] / squareSize).at(y1Quadrant))
-            {
-                yIncrement += 2 / squareSize;
-                rotation = 1;
+			left_top[0] -= 2;
+			left_bottom[0] -= 2;
+			int x1Quadrant = (int)((left_top[0]) / squareSize);
+			if (!map.bitmap.at(x1Quadrant).at((int)left_top[1] / squareSize))
+			{
+				x1Quadrant = (int)((left_bottom[0]) / squareSize);
+				if (!map.bitmap.at(x1Quadrant).at((int)left_bottom[1] / squareSize))
+				{
+					xIncrement -= 2 / squareSize;
+					//rotation = 2;
 
-                //camera direction set
-                zz = viewer[2] + 10;
-                xx = viewer[0];
+					//camera direction set
+					zz = viewer[2];
+					xx = viewer[0] - 10;
 
-                //camera location set
-                viewer[2] += 0.2;
-                zz += 0.2;
-            }
+					//camera location set
+					viewer[0] -= 0.2;
+					xx -= 0.2;
+				}
+			}
 		}
+		else
+		{
+			left_top[1] -= 2;
+			right_top[1] -= 2;
+
+			int y1Quadrant = (int)((left_top[1]) / squareSize);
+			if (!map.bitmap.at((int)left_top[0] / squareSize).at(y1Quadrant))
+			{
+				y1Quadrant = (int)((right_top[1]) / squareSize);
+				if (!map.bitmap.at((int)right_top[0] / squareSize).at(y1Quadrant))
+				{
+					yIncrement -= 2 / squareSize;
+					//rotation = 3;
+
+					//camera direction set
+					zz = viewer[2] - 10;
+					xx = viewer[0];
+
+					//camera location set
+					viewer[2] -= 0.2;
+					zz -= 0.2;
+				}
+			}
+		}
+
+		
 	}
+	
 	if (keyStates[27])
 	{
 		exit(-1);
@@ -357,6 +389,8 @@ void keyOperations()
 			replay = false;
 		}
 	}
+
+	glutPostRedisplay();
 }
 
 //Method to check if the game is over
