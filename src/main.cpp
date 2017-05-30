@@ -48,6 +48,7 @@ Dot dot;
 GLsizei ww, hh; //screen size
 bool replay = false; //check if starts a new game
 bool over = true; //check for the game to be over
+bool win = false; //check for win the game
 float squareSize = 50.0; //size of one square on the game
 float xIncrement = 0; // x movement on pacman
 float yIncrement = 0; // y movement on pacman
@@ -55,12 +56,15 @@ int rotation = 0; // orientation of pacman
 float angle = 0; // the angle(degree) of pacman's mouth
 float angle_Increment = 3;
 
+int mode = 2;
 float xx = -20, yy = -3.2, zz = -30;
 
 bool callOnce = false; // call function once
-
 bool* keyStates = new bool[256]; // record of all keys pressed
+
 int points = 0; // total points collected
+int died = 0;//count died number of time
+
 GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
 void viewerInit()
@@ -68,6 +72,7 @@ void viewerInit()
 	viewer[0] = -30;
 	viewer[1] = -5.0;
 	viewer[2] = -30;
+
 	xx = -21, yy = -3.2, zz = -30;
 }
 
@@ -197,6 +202,8 @@ void resetGame()
 	points = 0;
 	dot.setPoint(0);
 
+	viewerInit();
+
 	for (int i = 0; i < 256; i++)
 	{
 		keyStates[i] = false;
@@ -240,81 +247,105 @@ void resetGame()
 void keyOperations()
 {
 	//get current position
-	float x = (1.5 + xIncrement) * squareSize;
-	float y = (1.5 + yIncrement) * squareSize;
+	float left_top[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.18 + yIncrement) * squareSize };
+	float left_bottom[2] = { (float)(1.18 + xIncrement) * squareSize, (float)(1.82 + yIncrement) * squareSize };
+	float right_top[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.18 + yIncrement) * squareSize) };
+	float right_bottom[2] = { (float)((1.82 + xIncrement) * squareSize), (float)((1.82 + yIncrement) * squareSize) };
 
 	//update according to keys pressed
 	if (keyStates['a'] || keyStates['A'])
 	{
-		x -= 2;
-		int x1Quadrant = (int)((x - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!map.bitmap.at(x1Quadrant).at((int)y / squareSize))
+		left_top[0] -= 2;
+		left_bottom[0] -= 2;
+		int x1Quadrant = (int)((left_top[0]) / squareSize);
+		if (!map.bitmap.at(x1Quadrant).at((int)left_top[1] / squareSize))
 		{
-			xIncrement -= 2 / squareSize;
-			rotation = 2;
+			x1Quadrant = (int)((left_bottom[0]) / squareSize);
+			if (!map.bitmap.at(x1Quadrant).at((int)left_bottom[1] / squareSize))
+			{
+				xIncrement -= 2 / squareSize;
+				rotation = 2;
 
-			//camera direction set
-			zz = viewer[2];
-			xx = viewer[0] - 10;
+				//camera direction set
+				zz = viewer[2];
+				xx = viewer[0] - 10;
 
-			//camera location set
-			viewer[0] -= 0.2;
-			xx -= 0.2;
+				//camera location set
+				viewer[0] -= 0.2;
+				xx -= 0.2;
+			}
 		}
 	}
 	if (keyStates['d'] || keyStates['D'])
 	{
-		x += 2;
-		int x2Quadrant = (int)((x + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!map.bitmap.at(x2Quadrant).at((int)y / squareSize))
+		right_top[0] += 2;
+		right_bottom[0] += 2;
+
+		int x2Quadrant = (int)((right_top[0]) / squareSize);
+		if (!map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize))
 		{
-			xIncrement += 2 / squareSize;
-			rotation = 0;
+			if (!map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize))
+			{
+				xIncrement += 2 / squareSize;
+				rotation = 0;
 
-			//camera direction set
-			zz = viewer[2];
-			xx = viewer[0] + 10;
+				//camera direction set
+				zz = viewer[2];
+				xx = viewer[0] + 10;
 
-			//camera location set
-			viewer[0] += 0.2;
-			xx += 0.2;
+				//camera location set
+				viewer[0] += 0.2;
+				xx += 0.2;
+			}
 
 		}
 	}
 	if (keyStates['w'] || keyStates['W'])
 	{
-		y -= 2;
-		int y1Quadrant = (int)((y - 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!map.bitmap.at((int)x / squareSize).at(y1Quadrant))
+		left_top[1] -= 2;
+		right_top[1] -= 2;
+
+		int y1Quadrant = (int)((left_top[1]) / squareSize);
+		if (!map.bitmap.at((int)left_top[0] / squareSize).at(y1Quadrant))
 		{
-			yIncrement -= 2 / squareSize;
-			rotation = 3;
+			y1Quadrant = (int)((right_top[1]) / squareSize);
+			if (!map.bitmap.at((int)right_top[0] / squareSize).at(y1Quadrant))
+			{
+				yIncrement -= 2 / squareSize;
+				rotation = 3;
 
-			//camera direction set
-			zz = viewer[2] - 10;
-			xx = viewer[0];
+				//camera direction set
+				zz = viewer[2] - 10;
+				xx = viewer[0];
 
-			//camera location set
-			viewer[2] -= 0.2;
-			zz -= 0.2;
+				//camera location set
+				viewer[2] -= 0.2;
+				zz -= 0.2;
+			}
 		}
 	}
 	if (keyStates['s'] || keyStates['S'])
 	{
-		y += 2;
-		int y2Quadrant = (int)((y + 16.0 *cos(360 * M_PI / 180.0)) / squareSize);
-		if (!map.bitmap.at((int)x / squareSize).at(y2Quadrant))
+		left_bottom[1] += 2;
+		right_bottom[1] += 2;
+
+		int y1Quadrant = (int)((left_bottom[1]) / squareSize);
+		if (!map.bitmap.at((int)left_bottom[0] / squareSize).at(y1Quadrant))
 		{
-			yIncrement += 2 / squareSize;
-			rotation = 1;
+			y1Quadrant = (int)((right_bottom[1]) / squareSize);
+			if (!map.bitmap.at((int)right_bottom[0] / squareSize).at(y1Quadrant))
+			{
+				yIncrement += 2 / squareSize;
+				rotation = 1;
 
-			//camera direction set
-			zz = viewer[2] + 10;
-			xx = viewer[0];
+				//camera direction set
+				zz = viewer[2] + 10;
+				xx = viewer[0];
 
-			//camera location set
-			viewer[2] += 0.2;
-			zz += 0.2;
+				//camera location set
+				viewer[2] += 0.2;
+				zz += 0.2;
+			}
 		}
 	}
 	if (keyStates[27])
@@ -357,7 +388,7 @@ void gameOver()
 	{
 		over = true;
 	}
-	
+
 	//Points are different when you eat by level.
 	if (map.level == 1)
 	{
@@ -377,16 +408,20 @@ void gameOver()
 			resetGame(); //Go to Level 3
 		}
 	}
-	if (map.level == 3)
+	if (map.level == 106)
 	{
-		if (points == 106)
+		if (points == 10)
+		{
+			win = true;
 			over = true;
+		}
 	}
 
 	if (!over)
 	{
 		callOnce = false;
 	}
+
 }
 
 //Method to display the results of the game at the ends
@@ -400,7 +435,7 @@ void resultsDisplay()
 		callOnce = true;
 	}
 
-	if (points == 106)
+	if (win)
 	{
 		//Won
 		char* message = "*************************************";
@@ -497,29 +532,41 @@ void welcomeScreen()
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 }
 
-//Method to display the screen and its elements
-void display()
+//Methdo to reshape the game is the screen size changes
+void reshape(int w, int h)
 {
-	glViewport(0, 0, ww / 2, hh);
+	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-5, 5, 5, -5, 2, 20);
+
+	if (mode == 1)
+		glFrustum(-5, 5, 5, -5, 2, 20);
+
+	if (mode == 2)
+		glOrtho(0, 750, 750, 0, -750, 750);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	ww = w;
+	hh = h;
+}
+
+//Method to display the screen and its elements
+void display()
+{
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	//Left screen(3D and first person view)
-	glLoadIdentity();
+	mode = 1;
+	reshape(ww, hh);
 	gluLookAt(viewer[0], viewer[1], viewer[2], xx, yy, zz, 0, 1, 0);
 
 	if (points == 1)
-	{
 		over = false;
-	}
 
 	gameOver();
-
 	keyOperations();
 
 	//Increaseing the degree of pacman's mouth
@@ -539,66 +586,110 @@ void display()
 		if (!over)
 		{
 			glPushMatrix();
-
 			glRotated(90, 1, 0, 0);
 			glScalef(0.1, 0.1, 0.1);
 			glTranslated(-375, -375, -5);
 			map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
-			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
+			dot.drawDot3D(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
-			pacman.drawPacman(rotation);
+			pacman.drawPacman3D(rotation);
 
 			updateGhost(&Blinky);
 			updateGhost(&Inky);
 			updateGhost(&Clyde);
 			updateGhost(&Pinky);
 
-			Blinky.drawGhost(1.0, 0.0, 0.0); //red
-			Inky.drawGhost(0.0, 1.0, 1.0); //cyan
-			Clyde.drawGhost(1.0, 0.3, 0.0); //orange
-			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
+			Blinky.drawGhost3D(1.0, 0.0, 0.0); //red
+			Inky.drawGhost3D(0.0, 1.0, 1.0); //cyan
+			Clyde.drawGhost3D(1.0, 0.3, 0.0); //orange
+			Pinky.drawGhost3D(1.0, 0.0, 0.6); //magenta
 
 			glPopMatrix();
 			Sleep(10);
-			playSound(1);
+			if (died == 1) pacman.life = 2;
+			if (died == 2) pacman.life = 1;
+			if (died == 3) pacman.life = 0;
 		}
 		else
 		{
-			glLoadIdentity();
-			gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
-			glPushMatrix();
-			glScalef(0.1, 0.1, 0.1);
-			glTranslated(-75, -350, -1);
 			playSound(3);
+
+			mode = 2;
+			reshape(ww, hh);
+			glLoadIdentity();
 			resultsDisplay();
-			glPopMatrix();
+			if (pacman.life == 3) died = 1;
+			if (pacman.life == 2) died = 2;
+			if (pacman.life == 1) died = 3;
 		}
 	}
 	else
 	{
+		mode = 2;
+		reshape(ww, hh);
 		glLoadIdentity();
-		gluLookAt(0, 0, 10, 2, 0, 0, 0, 1, 0);
-		glPushMatrix();
-		glScalef(0.1, 0.1, 0.1);
-		glTranslated(-50, -300, -1);
 		welcomeScreen();
-		glPopMatrix();
 	}
 
 	//Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
-	glPushMatrix(); //Save root
-
-	glViewport(ww / 2, 0, ww, hh);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 750 * 2, 750, 0, -750, 750);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+	mode = 2;
+	reshape(ww, hh);
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0); //Fixed the viewer
 
-    //Scaling by level
+	if (replay)
+	{
+		if (!over)
+		{
+			//print score
+			glPushMatrix();
+			glColor3f(1, 1, 1);
+			char *message = "score : ";
+			glRasterPos2f(20, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
+			string result = to_string(points);
+			message = (char*)result.c_str();
+			glRasterPos2f(80, 60);
+			while (*message)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+			glPopMatrix();
+
+			//print life
+			glPushMatrix();
+			glColor3f(1.0, 1.0, 0.0);
+			if (pacman.life >= 1)
+			{
+				glTranslatef(squareSize - 20, squareSize - 25, 60);
+				pacman.drawLife();
+
+				if (pacman.life >= 2)
+				{
+					glTranslatef(30, 0, 0);
+					pacman.drawLife();
+
+					if (pacman.life >= 3)
+					{
+						glTranslatef(30, 0, 0);
+						pacman.drawLife();
+
+					}
+				}
+			}
+			glPopMatrix();
+		}
+	}
+
+	glPushMatrix(); //Save root
+	glScalef(0.3, 0.3, 0.3);
+	glTranslated(1600, 50, 0);
+
+	glPushMatrix();
+
+	//Scaling by level
 	if (map.level == 1)
 		glScalef(15.0 / 11.0, 15.0 / 11.0, 1); //11 by 11
 
@@ -608,13 +699,7 @@ void display()
 	else if (map.level == 3)
 		glScalef(1, 1, 1); //15 by 15
 
-	if (points == 1)
-	{
-		over = false;
-	}
-
 	gameOver();
-
 	keyOperations();
 
 	if (replay)
@@ -624,37 +709,32 @@ void display()
 			map.drawFloor();
 			map.drawLabyrinth();
 			pacman.setPacman(1.5 + xIncrement, 1.5 + yIncrement, angle);
-			dot.drawDot(pacman.x * squareSize, pacman.y * squareSize);
+			dot.drawDot2D(pacman.x * squareSize, pacman.y * squareSize);
 			points = dot.getPoint();
-			pacman.drawPacman(rotation);
+			pacman.drawPacman2D(rotation);
 
 			updateGhost(&Blinky);
 			updateGhost(&Inky);
 			updateGhost(&Clyde);
 			updateGhost(&Pinky);
 
-			Blinky.drawGhost(1.0, 0.0, 0.0); //red
-			Inky.drawGhost(0.0, 1.0, 1.0); //cyan
-			Clyde.drawGhost(1.0, 0.3, 0.0); //orange
-			Pinky.drawGhost(1.0, 0.0, 0.6); //magenta
+			if (map.level >= 2)
+				Blinky.drawGhost2D(1.0, 0.0, 0.0); //red
+
+			Inky.drawGhost2D(0.0, 1.0, 1.0); //cyan
+			Clyde.drawGhost2D(1.0, 0.3, 0.0); //orange
+			Pinky.drawGhost2D(1.0, 0.0, 0.6); //magenta
 
 			Sleep(10);
 			playSound(1);
 		}
 	}
 
-	glPopMatrix(); //Go to Root
+	glPopMatrix();
+	glPopMatrix();
 
 	glutSwapBuffers();
 }
-
-//Methdo to reshape the game is the screen size changes
-void reshape(int w, int h)
-{
-	ww = w;
-	hh = h;
-}
-
 
 //Main functions that controls the running of the game
 int main(int argc, char** argv)
@@ -662,7 +742,7 @@ int main(int argc, char** argv)
 	//initialize and create the screen
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(750 * 2, 750);
+	glutInitWindowSize(750, 750);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("PACMAN - by Patricia Terol");
 
@@ -674,7 +754,6 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
 	//run the game
-	glEnable(GL_DEPTH_TEST);
 	init();
 
 	glutMainLoop();
