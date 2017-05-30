@@ -23,11 +23,15 @@ Pacman is a game of eating all the food while running away from the ghost.
 ## License
 Follows [GPL v3](https://github.com/ekdud014/OSS_pacman/blob/master/LICENSE.txt)
 
+## Library
+We use library [SDL](https://www.libsdl.org/) 1.2 (with SDL Mixer) & [OpenGL](https://www.opengl.org/)
+
 ## Execution environment
-It works in windows([Visual Studio 2013](https://msdn.microsoft.com/library/dd831853(v=vs.120).aspx)) & mac([Xcode](https://developer.apple.com/xcode/))
+It works in compiler C++11. (If you use Visual Studio, you must use Visual Studio 2011 or later.) 
+We use Windows 7 ([Visual Studio 2013](https://msdn.microsoft.com/library/dd831853(v=vs.120).aspx)) & Windows 10 ([Visual Studio 2017](https://www.visualstudio.com/ko-kr/productinfo/vs2017-system-requirements-vs)) & Mac OS X ([Xcode](https://developer.apple.com/xcode/))
 
 ## How to execute
-Download all the files and put it on your project
+Download all the files and put it on your project and include the libraries.
 
 ## How to play
 Use followed keys to move pacman for eating food and running away from the ghost!
@@ -40,27 +44,38 @@ Use followed keys to move pacman for eating food and running away from the ghost
 
 * -a : move pacman left
 
+* space : restart the game
+
+* ESC : exit the game
+
 The food is 1 point for each food. You'll win if you eat all the food
 
+## Original
+https://github.com/patriciateroltolsa/Pacman
+
 ## How to contribute
+- Fork this project.
+- Create your branch name prefix_function&num_youname (refer issue#30)
+- Pull requests us! 
+
 Connect us here
 
-**team leader**  
+**Dayoung Park(team leader)**  
 
 * <ekdud014@naver.com>
 * https://github.com/ekdud014
 
-**team member1**
+**Sojeong Lee**
 
 * <angel5164312@naver.com>
 * https://github.com/SojeongLee
 
-**team member2**
+**Seungyeon Lee**
 
 * <yeondiary@gmail.com>
 * https://github.com/Seungyeon-Lee
 
-**team member3** 
+**Yeji Rha** 
 
 * <qpab7722@gamil.com>
 * https://github.com/qpab7722
