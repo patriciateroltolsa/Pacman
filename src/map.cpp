@@ -4,6 +4,8 @@ Map::Map()
 {
 	squareSize = 50.0;
 	level = 1; // there are 1, 2, 3 levels, priority is to level 1
+    blue[0]=0, blue[1]=0.2, blue[2]=0.4;
+    black[0]=0, black[1]=0, black[2]=0;
 }
 
 Map::~Map()
@@ -127,7 +129,7 @@ void Map::drawFloor()
 {
     glPushMatrix();
     
-    glColor3f(0, 0.2, 0.4);
+    glColor3fv(black);
     glTranslated(15.0/2*squareSize, 15.0/2*squareSize, -5);
     glScalef(1, 1, 0.01);
     glutSolidCube(squareSize*15);
@@ -142,7 +144,7 @@ void Map::drawLabyrinth(){
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
 		glScalef(15, 1, 1); //Long x-axis cube
-		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
+		glColor3fv(blue); glutSolidCube(50);
 		glColor3f(0, 0, 0); glutWireCube(50);
 		glPopMatrix();
 	}
@@ -152,7 +154,7 @@ void Map::drawLabyrinth(){
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
         glScalef(1, 15, 1); //Long y-axis cube
-		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
+		glColor3fv(blue); glutSolidCube(50);
 		glColor3f(0, 0, 0); glutWireCube(50);
 		glPopMatrix();
 	}
@@ -163,7 +165,7 @@ void Map::drawLabyrinth(){
 		glTranslated(obstaclesBottom.at(j) * squareSize, obstaclesBottom.at(j + 1) * squareSize, 25);
 		glColor3f(0, 0, 0);
 		glutWireCube(50);
-		glColor3f(1, 1, 1);
+		glColor3fv(blue);
 		glutSolidCube(50);
 		glPopMatrix();
 
@@ -173,7 +175,7 @@ void Map::drawLabyrinth(){
 		glTranslated(obstaclesMiddle.at(k) * squareSize, obstaclesMiddle.at(k + 1) * squareSize, 25);
 		glColor3f(0, 0, 0);
 		glutWireCube(50);
-		glColor3f(1, 1, 1);
+		glColor3fv(blue);
 		glutSolidCube(50);
 		glPopMatrix();
 	}
@@ -184,7 +186,7 @@ void Map::drawLabyrinth(){
 		glTranslatef(obstaclesTop.at(p) * squareSize, obstaclesTop.at(p + 1) * squareSize, 25);
 		glColor3f(0, 0, 0);
 		glutWireCube(50);
-		glColor3f(1, 1, 1);
+		glColor3fv(blue) ;
 		glutSolidCube(50);
 		glPopMatrix();
 	}
