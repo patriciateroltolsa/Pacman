@@ -63,6 +63,7 @@ bool* keyStates = new bool[256]; // record of all keys pressed
 int points = 0; // total points collected
 GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
+float cam_angle= 90 *3.14/180;
 void viewerInit()
 {
 	viewer[0] = -30;
@@ -194,6 +195,8 @@ void resetGame()
 
 	rotation = 0;
 
+    cam_angle= 90 *3.14/180;
+    
 	points = 0;
 	dot.setPoint(0);
 
@@ -250,15 +253,23 @@ void keyOperations()
 	{
 		keyStates['a'] = false; keyStates['A'] = false;
 
+        cam_angle = cam_angle + 90 * 3.14 /180;
+        xx = 10 * sin(cam_angle) + viewer[0];
+        zz = 10 * cos(cam_angle) + viewer[2];
+        
 		if (rotation == 1)          rotation = 0;
 		else if (rotation == 2)  	rotation = 1;
 		else if (rotation == 3)  	rotation = 2;
 		else if (rotation == 0)  	rotation = 3;
-	}
+    }
 	if (keyStates['d'] || keyStates['D']) //rotate to right
 	{
 		keyStates['d'] = false; keyStates['D'] = false;
 
+        cam_angle = cam_angle - 90 * 3.14/180;
+        xx = 10 * sin(cam_angle) + viewer[0];
+        zz = 10 * cos(cam_angle) + viewer[2];
+        
 		if (rotation == 1)          rotation = 2;
 		else if (rotation == 2)  	rotation = 3;
 		else if (rotation == 3)  	rotation = 0;
@@ -268,6 +279,10 @@ void keyOperations()
 	{
 		keyStates['s'] = false; keyStates['S'] = false;
 
+        cam_angle = cam_angle + 180 * 3.14/180;
+        xx = 10 * sin(cam_angle) + viewer[0];
+        zz = 10 * cos(cam_angle) + viewer[2];
+        
 		if (rotation == 1)          rotation = 3;
 		else if (rotation == 2)  	rotation = 0;
 		else if (rotation == 3)  	rotation = 1;
