@@ -26,12 +26,13 @@ public:
 	void dotInit1();
 	void dotInit2();
 	void dotInit3();
-	
+
 	//Method to check if the food has been eaten
 	bool dotEaten(int x, int y, float pacmanX, float pacmanY);
 
 	//Method to draw all the food left and delete the ate one
-	void drawDot(float pacmanX, float pacmanY);
+	void drawDot2D(float pacmanX, float pacmanY);
+	void drawDot3D(float pacmanX, float pacmanY);
 
 	int getPoint();
 
