@@ -1,14 +1,14 @@
 #include "sound.h"
 
-//sound filenames
-const char *SOUND_FILES[] = { "beginning.wav", "eating.wav", "death.wav" };
-
 Mix_Music *begin;
 Mix_Chunk *eat;
 Mix_Chunk *death;
+Mix_Chunk *change;
+Mix_Chunk *win;
 
 int beginCount = 0;
 int deathCount = 0;
+int winCount = 0;
 
 void loadingSounds()
 {
@@ -26,6 +26,8 @@ void loadingSounds()
 	begin = Mix_LoadMUS("sound/beginning.wav");
 	eat = Mix_LoadWAV("sound/eating.wav");
 	death = Mix_LoadWAV("sound/death.wav");
+	change = Mix_LoadWAV("sound/change.wav");
+	win = Mix_LoadWAV("sound/win.wav");
 }
 
 void setVolume(Mix_Chunk *chunk, float volume)
@@ -37,6 +39,7 @@ void setSoundInit()
 {
 	beginCount = 0;
 	deathCount = 0;
+	winCount = 0;
 }
 
 void playSound(int num)
@@ -63,12 +66,23 @@ void playSound(int num)
 		}
 		deathCount++;
 		break;
+	case 4:
+		setVolume(change, 0.5);
+		Mix_PlayChannel(4, change, 0);
+		break;
+	case 5:
+		if (winCount == 0)
+		{
+			setVolume(win, 0.5);
+			Mix_PlayChannel(4, win, 0);
+		}
+		winCount++;
+		break;
 	}
 }
 
 void pauseSound(int num)
 {
-
 	switch (num)
 	{
 	case 1:
@@ -80,13 +94,16 @@ void pauseSound(int num)
 	case 3:
 		Mix_Pause(3);
 		break;
+	case 4:
+		Mix_Pause(4);
+		break;
+	case 5:
+		Mix_Pause(4);
+		break;
 	}
 }
 
 void freeSounds()
 {
 	Mix_CloseAudio();
-	//Mix_FreeChunk(begin);
-	//Mix_FreeChunk(eat);
-	//Mix_FreeChunk(death);
 }

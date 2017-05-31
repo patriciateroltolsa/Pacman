@@ -23,8 +23,10 @@ public:
 	Dot();
 	~Dot();
 
-	void dotInit();
-
+	void dotInit1();
+	void dotInit2();
+	void dotInit3();
+	
 	//Method to check if the food has been eaten
 	bool dotEaten(int x, int y, float pacmanX, float pacmanY);
 
@@ -32,6 +34,8 @@ public:
 	void drawDot(float pacmanX, float pacmanY);
 
 	int getPoint();
+
+	void setPoint(int n);
 
 };
 #endif
