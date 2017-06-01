@@ -456,9 +456,9 @@ void gameOver()
 			resetGame(); //Go to Level 3
 		}
 	}
-	if (map.level == 106)
+	if (map.level == 3)
 	{
-		if (points == 10)
+		if (points == 106)
 		{
 			win = true;
 			over = true;
