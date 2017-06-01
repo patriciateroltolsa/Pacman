@@ -37,6 +37,7 @@ void Pacman::drawPacman2D(float rotation)
 		y = 16 * sin((i + 90 * rotation) * M_PI / 180.0) + (this->y*squareSize);
 		glVertex2f(x, y);
 	}
+	glEnd();
 }
 
 void Pacman::drawLife(){
