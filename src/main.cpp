@@ -68,6 +68,14 @@ int died = 0;//count died number of time
 GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
 float cam_angle= 90 *3.14/180;
+
+//light
+GLfloat light0_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat light0_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; //White
+GLfloat light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat light0_position[] = { 1.0, -1.0, 1.0, 0.0 };
+
+
 void viewerInit()
 {
 	viewer[0] = -30;
