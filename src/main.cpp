@@ -690,16 +690,13 @@ void display()
 		}
 		else
 		{
-			glLoadIdentity();
-			gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
-			glPushMatrix();
-			glScalef(0.1, 0.1, 0.1);
-			glTranslated(-75, -350, -1);
 			if (!win)
 				playSound(3);
 			else
 				playSound(5);
 
+			mode = 2;
+			reshape(ww, hh);
 			resultsDisplay();
 			if (pacman.life == 3) died = 1;
 			if (pacman.life == 2) died = 2;
