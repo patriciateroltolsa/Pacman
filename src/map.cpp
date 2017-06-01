@@ -128,7 +128,7 @@ void Map::drawFloor()
     glPushMatrix();
     
     glColor3f(0, 0.2, 0.4);
-    glTranslated(15.0/2*squareSize, 15.0/2*squareSize, -5);
+	glTranslated(border.at(2) / 2 * squareSize, border.at(2) / 2 * squareSize, -5);
     glScalef(1, 1, 0.01);
     glutSolidCube(squareSize*15);
     
@@ -141,9 +141,9 @@ void Map::drawLabyrinth(){
 	{
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
-		glScalef(15, 1, 1); //Long x-axis cube
-		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
-		glColor3f(0, 0, 0); glutWireCube(50);
+		glScalef(border.at(2), 1, 1); //Long x-axis cube
+		glColor3f(1.0, 1.0, 1.0);
+		glutSolidCube(50);
 		glPopMatrix();
 	}
 	//Border2
@@ -151,9 +151,9 @@ void Map::drawLabyrinth(){
 	{
 		glPushMatrix();
 		glTranslatef((border.at(i)*squareSize + border.at(i + 2)*squareSize) / 2.0, (border.at(i + 1)*squareSize + border.at(i + 3)*squareSize) / 2.0, 25);
-        glScalef(1, 15, 1); //Long y-axis cube
-		glColor3f(1.0, 1.0, 1.0); glutSolidCube(50);
-		glColor3f(0, 0, 0); glutWireCube(50);
+		glScalef(1, border.at(2)-1, 1); //Long y-axis cube
+		glColor3f(1.0, 1.0, 1.0);
+		glutSolidCube(50);
 		glPopMatrix();
 	}
 
@@ -161,8 +161,6 @@ void Map::drawLabyrinth(){
 	for (int j = 0; j < obstaclesBottom.size(); j = j + 2) {
 		glPushMatrix();
 		glTranslated(obstaclesBottom.at(j) * squareSize, obstaclesBottom.at(j + 1) * squareSize, 25);
-		glColor3f(0, 0, 0);
-		glutWireCube(50);
 		glColor3f(1, 1, 1);
 		glutSolidCube(50);
 		glPopMatrix();
@@ -171,8 +169,6 @@ void Map::drawLabyrinth(){
 	for (int k = 0; k < obstaclesMiddle.size(); k = k + 2) {
 		glPushMatrix();
 		glTranslated(obstaclesMiddle.at(k) * squareSize, obstaclesMiddle.at(k + 1) * squareSize, 25);
-		glColor3f(0, 0, 0);
-		glutWireCube(50);
 		glColor3f(1, 1, 1);
 		glutSolidCube(50);
 		glPopMatrix();
@@ -182,8 +178,6 @@ void Map::drawLabyrinth(){
 	{
 		glPushMatrix();
 		glTranslatef(obstaclesTop.at(p) * squareSize, obstaclesTop.at(p + 1) * squareSize, 25);
-		glColor3f(0, 0, 0);
-		glutWireCube(50);
 		glColor3f(1, 1, 1);
 		glutSolidCube(50);
 		glPopMatrix();
