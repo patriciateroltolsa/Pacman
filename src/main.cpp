@@ -81,7 +81,7 @@ void viewerInit()
 void init()
 {
 	//clear screen
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glShadeModel(GL_FLAT);
 
 	//reset all keys
@@ -604,8 +604,8 @@ void reshape(int w, int h)
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0, 0.0, 0.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
-
 	//Left screen(3D and first person view)
 	mode = 1;
 	reshape(ww, hh);
