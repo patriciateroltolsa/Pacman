@@ -70,11 +70,10 @@ GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 float cam_angle= 90 *3.14/180;
 
 //light
-GLfloat light0_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat light0_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
 GLfloat light0_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; //White
 GLfloat light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light0_position[] = { 1.0, -1.0, 1.0, 0.0 };
-
 
 void viewerInit()
 {
@@ -90,7 +89,6 @@ void init()
 {
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glShadeModel(GL_FLAT);
 
 	//reset all keys
 	for (int i = 0; i < 256; i++)
@@ -105,12 +103,10 @@ void init()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-	
+
 	glEnable(GL_COLOR_MATERIAL);
 
 	glShadeModel(GL_SMOOTH);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 }
 
 //Method to update the position of the monsters randomly
@@ -495,8 +491,11 @@ void gameOver()
 //Method to display the results of the game at the ends
 void resultsDisplay()
 {
-	glClearColor(0, 0.2, 0.4, 1.0);
 	viewerInit();
+	glClearColor(0, 0.2, 0.4, 1.0);
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
 
 	if (!callOnce)
 	{
@@ -574,6 +573,9 @@ void welcomeScreen()
 	viewerInit();
 	glClearColor(0, 0.2, 0.4, 1.0);
 
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+
 	char* message = "*************************************";
 	glRasterPos2f(150, 200);
 	while (*message)
@@ -627,6 +629,9 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0, 0.0, 0.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
 	//Left screen(3D and first person view)
 	mode = 1;
 	reshape(ww, hh);
@@ -704,6 +709,9 @@ void display()
 
 	//Right screen(2D(Actually draw 3D, so I think it may be modified) and third person view)
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+
 	mode = 2;
 	reshape(ww, hh);
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0); //Fixed the viewer
