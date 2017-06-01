@@ -62,7 +62,7 @@ void Ghost::drawGhost3D(float r, float g, float b){
 	glColor3f(r, g, b);
 	glTranslated(this->x*squareSize, this->y*squareSize, 0);
 	glScaled(1, 1, 2);
-	glutSolidSphere(16, 10, 10);
+	glutSolidSphere(16, 50, 50);
 
 	glPopMatrix();
 }
