@@ -1,24 +1,18 @@
 /*
-
 3D & 2D Pacman
 Original: https://github.com/patriciateroltolsa/Pacman
 Updates: https://github.com/ekdud014/OSS_pacman
-
 Original Copyright (C) Patricia Terol
 Updates Copyright (C) Yeji Na, Dayoung Park, Sojeong Lee, Seungyeon Lee
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, version 3.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
 
 #include <Windows.h>
@@ -67,7 +61,7 @@ int died = 0;//count died number of time
 
 GLdouble viewer[] = { 0, 0, 1 }; // initial viewer location
 
-float cam_angle= 90 *3.14/180;
+float cam_angle = 90 * 3.14 / 180;
 
 //light
 GLfloat light0_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
@@ -216,8 +210,8 @@ void resetGame()
 
 	rotation = 0;
 
-    cam_angle= 90 *3.14/180;
-    
+	cam_angle = 90 * 3.14 / 180;
+
 	points = 0;
 	dot.setPoint(0);
 
@@ -276,23 +270,23 @@ void keyOperations()
 	{
 		keyStates['a'] = false; keyStates['A'] = false;
 
-        cam_angle = cam_angle + 90 * 3.14 /180;
-        xx = 10 * sin(cam_angle) + viewer[0];
-        zz = 10 * cos(cam_angle) + viewer[2];
-        
+		cam_angle = cam_angle + 90 * 3.14 / 180;
+		xx = 10 * sin(cam_angle) + viewer[0];
+		zz = 10 * cos(cam_angle) + viewer[2];
+
 		if (rotation == 1)          rotation = 0;
 		else if (rotation == 2)  	rotation = 1;
 		else if (rotation == 3)  	rotation = 2;
 		else if (rotation == 0)  	rotation = 3;
-    }
+	}
 	if (keyStates['d'] || keyStates['D']) //rotate to right
 	{
 		keyStates['d'] = false; keyStates['D'] = false;
 
-        cam_angle = cam_angle - 90 * 3.14/180;
-        xx = 10 * sin(cam_angle) + viewer[0];
-        zz = 10 * cos(cam_angle) + viewer[2];
-        
+		cam_angle = cam_angle - 90 * 3.14 / 180;
+		xx = 10 * sin(cam_angle) + viewer[0];
+		zz = 10 * cos(cam_angle) + viewer[2];
+
 		if (rotation == 1)          rotation = 2;
 		else if (rotation == 2)  	rotation = 3;
 		else if (rotation == 3)  	rotation = 0;
@@ -302,10 +296,10 @@ void keyOperations()
 	{
 		keyStates['s'] = false; keyStates['S'] = false;
 
-        cam_angle = cam_angle + 180 * 3.14/180;
-        xx = 10 * sin(cam_angle) + viewer[0];
-        zz = 10 * cos(cam_angle) + viewer[2];
-        
+		cam_angle = cam_angle + 180 * 3.14 / 180;
+		xx = 10 * sin(cam_angle) + viewer[0];
+		zz = 10 * cos(cam_angle) + viewer[2];
+
 		if (rotation == 1)          rotation = 3;
 		else if (rotation == 2)  	rotation = 0;
 		else if (rotation == 3)  	rotation = 1;
@@ -409,7 +403,7 @@ void keyOperations()
 			}
 		}
 	}
-	
+
 	if (keyStates[27])
 	{
 		exit(-1);
@@ -458,7 +452,6 @@ void gameOver()
 	{
 		if (points == 55) //If you check it works well, then modify 55 to smaller number.
 		{
-			playSound(4);
 			map.level = 2;
 			//over = true;
 			resetGame(); //Go to Level 2
@@ -468,7 +461,6 @@ void gameOver()
 	{
 		if (points == 74) //74
 		{
-			playSound(4);
 			map.level = 3;
 			//over = true;
 			resetGame(); //Go to Level 3
@@ -629,7 +621,7 @@ void reshape(int w, int h)
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0, 0.0, 0.0, 1.0);
+	glClearColor(0, 0.0, 0.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -690,16 +682,14 @@ void display()
 		}
 		else
 		{
-			glLoadIdentity();
-			gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
-			glPushMatrix();
-			glScalef(0.1, 0.1, 0.1);
-			glTranslated(-75, -350, -1);
 			if (!win)
 				playSound(3);
 			else
 				playSound(5);
 
+			mode = 2;
+			reshape(ww, hh);
+			glLoadIdentity();
 			resultsDisplay();
 			if (pacman.life == 3) died = 1;
 			if (pacman.life == 2) died = 2;
