@@ -79,7 +79,7 @@ GLfloat light0_position[] = { 1.0, -1.0, 1.0, 0.0 };
 void viewerInit()
 {
 	viewer[0] = -30;
-	viewer[1] = -5.0;
+	viewer[1] = -10;
 	viewer[2] = -30;
 
 	xx = -21, yy = -3.2, zz = -30;
@@ -99,6 +99,18 @@ void init()
 	}
 
 	loadingSounds();
+
+	//using light
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+	
+	glEnable(GL_COLOR_MATERIAL);
+
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 }
 
 //Method to update the position of the monsters randomly
@@ -483,6 +495,7 @@ void gameOver()
 //Method to display the results of the game at the ends
 void resultsDisplay()
 {
+	glClearColor(0, 0.2, 0.4, 1.0);
 	viewerInit();
 
 	if (!callOnce)
