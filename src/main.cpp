@@ -458,6 +458,7 @@ void gameOver()
 	{
 		if (points == 55) //If you check it works well, then modify 55 to smaller number.
 		{
+			playSound(4);
 			map.level = 2;
 			//over = true;
 			resetGame(); //Go to Level 2
@@ -467,6 +468,7 @@ void gameOver()
 	{
 		if (points == 74) //74
 		{
+			playSound(4);
 			map.level = 3;
 			//over = true;
 			resetGame(); //Go to Level 3
@@ -688,15 +690,17 @@ void display()
 		}
 		else
 		{
-			playSound(3);
 
-			mode = 2;
-			reshape(ww, hh);
+	
 			glLoadIdentity();
-			resultsDisplay();
-			if (pacman.life == 3) died = 1;
-			if (pacman.life == 2) died = 2;
-			if (pacman.life == 1) died = 3;
+			gluLookAt(0, 0, 10, 0.7, 0, 0, 0, 1, 0);
+			glPushMatrix();
+			glScalef(0.1, 0.1, 0.1);
+			glTranslated(-75, -350, -1);
+			if (!win)
+				playSound(3);
+			else
+				playSound(5);
 		}
 	}
 	else
