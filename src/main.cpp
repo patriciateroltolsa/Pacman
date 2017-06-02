@@ -60,8 +60,8 @@ float yIncrement = 0; //Y movement on pacman
 float angle = 0; //The angle(degree) of pacman's mouth
 float angle_Increment = 3; //The angle increment of pacman's mouth
 float cam_angle = 90 * 3.14 / 180; //Camera angle according to pacman's movement
-//Light varialble
-float light0_ambient[] = { 0.5, 0.5, 0.5, 1.0 }; 
+								   //Light varialble
+float light0_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
 float light0_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; //White
 float light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 float light0_position[] = { 1.0, -1.0, 1.0, 0.0 };
@@ -88,7 +88,7 @@ void init()
 {
 	glClearColor(0.0, 0.0, 0.0, 1.0);//Clear screen black
 
-	//Reset all keys
+									 //Reset all keys
 	for (int i = 0; i < 256; i++)
 	{
 		keyStates[i] = false;
@@ -131,8 +131,8 @@ void updateGhost(Ghost *ghost)
 				ghost->id = (rand() % 4) + 1;
 			} while (current == (int)ghost->id);
 		}
-		break;	
-	
+		break;
+
 	case 2:
 		if (!map.bitmap.at(x2Quadrant).at((int)ghost->y))
 		{
@@ -147,7 +147,7 @@ void updateGhost(Ghost *ghost)
 			} while (current == (int)ghost->id);
 		}
 		break;
-	
+
 	case 3:
 		if (!map.bitmap.at((int)ghost->x).at(y1Quadrant))
 		{
@@ -162,7 +162,7 @@ void updateGhost(Ghost *ghost)
 			} while (current == (int)ghost->id);
 		}
 		break;
-	
+
 	case 4:
 		if (!map.bitmap.at((int)ghost->x).at(y2Quadrant))
 		{
@@ -177,7 +177,7 @@ void updateGhost(Ghost *ghost)
 			} while (current == (int)ghost->id);
 		}
 		break;
-	
+
 	default:
 		break;
 	}
@@ -282,7 +282,7 @@ void keyOperations()
 	//Update according to keys pressed
 	if (keyStates['a'] || keyStates['A']) //Rotate to left
 	{
-		keyStates['a'] = false; 
+		keyStates['a'] = false;
 		keyStates['A'] = false;
 
 		cam_angle = cam_angle + 90 * 3.14 / 180;
@@ -295,21 +295,21 @@ void keyOperations()
 		}
 		else if (rotation == 2) //Left direction
 		{
-			rotation = 1; 
+			rotation = 1;
 		}
 		else if (rotation == 3) //Up direction
 		{
 			rotation = 2;
 		}
 		else if (rotation == 0) //Right direction
-		{ 
+		{
 			rotation = 3;
 		}
 	}
 
 	if (keyStates['d'] || keyStates['D']) //rotate to right
 	{
-		keyStates['d'] = false; 
+		keyStates['d'] = false;
 		keyStates['D'] = false;
 
 		cam_angle = cam_angle - 90 * 3.14 / 180;
@@ -336,7 +336,7 @@ void keyOperations()
 
 	if (keyStates['s'] || keyStates['S']) //rotate to back
 	{
-		keyStates['s'] = false; 
+		keyStates['s'] = false;
 		keyStates['S'] = false;
 
 		cam_angle = cam_angle + 180 * 3.14 / 180;
@@ -369,10 +369,10 @@ void keyOperations()
 			right_bottom[0] += 2;
 
 			//Check if right moved location is obstacle
-			int x2Quadrant = (int)((right_top[0]) / squareSize);			
+			int x2Quadrant = (int)((right_top[0]) / squareSize);
 			bool isObstacle1 = map.bitmap.at(x2Quadrant).at((int)right_top[1] / squareSize);
 
-			if (!isObstacle1) 
+			if (!isObstacle1)
 			{
 				x2Quadrant = (int)((right_bottom[0]) / squareSize);
 				bool isObstacle2 = map.bitmap.at(x2Quadrant).at((int)right_bottom[1] / squareSize);
@@ -527,7 +527,7 @@ void gameOver()
 	}
 	else if (map.level == 2)
 	{
-		if (points == 74) 
+		if (points == 74)
 		{
 			playSound(4);
 			map.level = 3;
@@ -551,7 +551,7 @@ void gameOver()
 }
 
 //Method to display the results of the game at the ends
-void resultsDisplay()
+void resultScreen()
 {
 	viewerInit();
 	glClearColor(0, 0.2, 0.4, 1.0);
@@ -759,12 +759,12 @@ void display()
 			{
 				pacman.life = 2;
 			}
-			if (died == 2) 
-			{ 
-				pacman.life = 1; 
+			if (died == 2)
+			{
+				pacman.life = 1;
 			}
 			if (died == 3)
-			{ 
+			{
 				pacman.life = 0;
 			}
 		}
@@ -786,7 +786,7 @@ void display()
 			{
 				died = 1;
 			}
-			if (pacman.life == 2) 
+			if (pacman.life == 2)
 			{
 				died = 2;
 			}
@@ -795,7 +795,7 @@ void display()
 				died = 3;
 			}
 
-			resultsDisplay();			
+			resultScreen();
 		}
 	}
 	else
@@ -900,11 +900,11 @@ void display()
 			updateGhost(&Pinky);
 
 			if (map.level >= 2)
-				Blinky.drawGhost2D(1.0, 0.0, 0.0); 
+				Blinky.drawGhost2D(1.0, 0.0, 0.0);
 
-			Inky.drawGhost2D(0.0, 1.0, 1.0); 
-			Clyde.drawGhost2D(1.0, 0.3, 0.0); 
-			Pinky.drawGhost2D(1.0, 0.0, 0.6); 
+			Inky.drawGhost2D(0.0, 1.0, 1.0);
+			Clyde.drawGhost2D(1.0, 0.3, 0.0);
+			Pinky.drawGhost2D(1.0, 0.0, 0.6);
 
 			Sleep(10);
 			playSound(1);
