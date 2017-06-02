@@ -60,12 +60,14 @@ float yIncrement = 0; //Y movement on pacman
 float angle = 0; //The angle(degree) of pacman's mouth
 float angle_Increment = 3; //The angle increment of pacman's mouth
 float cam_angle = 90 * 3.14 / 180; //Camera angle according to pacman's movement
-								   //Light varialble
+float xx = -20, yy = -3.2, zz = -30; //Camera viewer direction
+
+//Light varialble
 float light0_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
 float light0_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; //White
 float light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 float light0_position[] = { 1.0, -1.0, 1.0, 0.0 };
-float xx = -20, yy = -3.2, zz = -30;
+
 
 int rotation = 0; //Orientation of pacman 
 int mode = 2; //Check Projection 1:Frustum 2:Ortho
@@ -88,7 +90,7 @@ void init()
 {
 	glClearColor(0.0, 0.0, 0.0, 1.0);//Clear screen black
 
-									 //Reset all keys
+	//Reset all keys
 	for (int i = 0; i < 256; i++)
 	{
 		keyStates[i] = false;
@@ -109,7 +111,7 @@ void init()
 //Method to update the position of the ghosts randomly
 void updateGhost(Ghost *ghost)
 {
-	//Find the current position of the monster x1,y1 : min range / x2,y2 : max range
+	//Find the current position of the monster. x1,y1 : min range & x2,y2 : max range
 	int x1Quadrant = (int)((ghost->x - (2 / squareSize)) - (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
 	int x2Quadrant = (int)((ghost->x + (2 / squareSize)) + (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
 	int y1Quadrant = (int)((ghost->y - (2 / squareSize)) - (16.0 *cos(360 * M_PI / 180.0)) / squareSize);
