@@ -31,12 +31,7 @@ It works in compiler C++11. (If you use Visual Studio, you must use Visual Studi
 We use Windows 7 ([Visual Studio 2013](https://msdn.microsoft.com/library/dd831853(v=vs.120).aspx)) & Windows 10 ([Visual Studio 2017](https://www.visualstudio.com/ko-kr/productinfo/vs2017-system-requirements-vs)) & Mac OS X ([Xcode](https://developer.apple.com/xcode/))
 
 ## How to execute
-- Fork this project.
-- Check our [Help wanted](https://github.com/ekdud014/OSS_pacman/projects/1)
-- Create your branch name prefix_function&num_youname (refer [issue#30](https://github.com/ekdud014/OSS_pacman/issues/30))
-- Pull requests us! 
-
-Connect us [here](https://github.com/ekdud014/OSS_pacman/wiki/Core-Team)
+Download all the files and put it on your project and include the libraries.
 
 ## How to play
 Use followed keys to move pacman for eating food and running away from the ghost!
