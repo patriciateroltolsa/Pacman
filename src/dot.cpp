@@ -53,6 +53,7 @@ void Dot::dotInit3()
 			7.5, 13.5, 8.5, 13.5, 9.5, 13.5, 10.5, 13.5, 11.5, 13.5, 12.5, 13.5, 13.5 };
 }
 
+//Check the dot eaten if the dot coordinate is in the range of pacman coordinate
 bool Dot::dotEaten(int x, int y, float pacmanX, float pacmanY)
 {
 	if (x >= pacmanX - 16.0 * cos(359 * M_PI / 180.0) && x <= pacmanX + 16.0 * cos(359 * M_PI / 180.0))
@@ -66,12 +67,12 @@ bool Dot::dotEaten(int x, int y, float pacmanX, float pacmanY)
 	return false;
 }
 
-//Method to draw all the food left and delete the ate one
+//Method to draw all the left dot and delete the eaten one
 void Dot::drawDot2D(float pacmanX, float pacmanY)
 {
 	deque<float> temp; //Store remian dot
 
-	//Check if the food has not been eaten
+	//Check if the dot has not been eaten
 	for (int i = 0; i < dot.size(); i = i + 2) 
 	{
 		bool checkEaten = dotEaten(dot.at(i) * squareSize, dot.at(i + 1) * squareSize, pacmanX, pacmanY);
@@ -94,7 +95,7 @@ void Dot::drawDot2D(float pacmanX, float pacmanY)
 	glBegin(GL_POINTS);
 	glColor3f(1.0, 1.0, 1.0); //White
 	
-	//Draw all the food avilable
+	//Draw all the dot avilable
 	for (int j = 0; j < dot.size(); j = j + 2)
 	{
 		glVertex2f(dot.at(j) * squareSize, dot.at(j + 1) * squareSize);
@@ -107,7 +108,7 @@ void Dot::drawDot3D(float pacmanX, float pacmanY)
 {
 	deque<float> temp; //Store remian dot
 
-	//Check if the food has not been eaten
+	//Check if the dot has not been eaten
 	for (int i = 0; i < dot.size(); i = i + 2)
 	{
 		bool checkEaten = dotEaten(dot.at(i) * squareSize, dot.at(i + 1) * squareSize, pacmanX, pacmanY);
@@ -125,7 +126,7 @@ void Dot::drawDot3D(float pacmanX, float pacmanY)
 
 	dot.swap(temp);
 
-	//Draw all the food avilable
+	//Draw all the dot avilable
 	for (int j = 0; j < dot.size(); j = j + 2)
 	{
 		glPushMatrix(); 
