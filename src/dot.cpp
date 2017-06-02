@@ -106,9 +106,8 @@ void Dot::drawDot2D(float pacmanX, float pacmanY)
 
 void Dot::drawDot3D(float pacmanX, float pacmanY)
 {
-	deque<float> temp; //Store remian dot
+	deque<float> temp; 
 
-	//Check if the dot has not been eaten
 	for (int i = 0; i < dot.size(); i = i + 2)
 	{
 		bool checkEaten = dotEaten(dot.at(i) * squareSize, dot.at(i + 1) * squareSize, pacmanX, pacmanY);
@@ -126,7 +125,6 @@ void Dot::drawDot3D(float pacmanX, float pacmanY)
 
 	dot.swap(temp);
 
-	//Draw all the dot avilable
 	for (int j = 0; j < dot.size(); j = j + 2)
 	{
 		glPushMatrix(); 

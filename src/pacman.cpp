@@ -23,7 +23,7 @@ void Pacman::setPacman(float x, float y, float angle)
 
 void Pacman::drawPacman2D(float rotation)
 {
-	float x, y;
+	float x, y; //Coordinate of pacman
 
 	glBegin(GL_LINES);
 	glColor3f(1.0, 1.0, 0.0);
