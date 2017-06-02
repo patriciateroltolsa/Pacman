@@ -18,7 +18,7 @@ private:
 	deque <float> dot;
 
 public:
-	float x, y;
+	float x, y; // Coordinate of dots
 
 	Dot();
 	~Dot();
