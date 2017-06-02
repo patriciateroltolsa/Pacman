@@ -54,10 +54,12 @@ void playSound(int num)
 		}
 		beginCount++;
 		break;
+
 	case 2:
 		setVolume(eat, 0.5);
 		Mix_PlayChannel(2, eat, 0);
 		break;
+
 	case 3:
 		if (deathCount == 0)
 		{
@@ -66,10 +68,12 @@ void playSound(int num)
 		}
 		deathCount++;
 		break;
+
 	case 4:
 		setVolume(change, 0.5);
 		Mix_PlayChannel(4, change, 0);
 		break;
+
 	case 5:
 		if (winCount == 0)
 		{
@@ -79,6 +83,8 @@ void playSound(int num)
 		winCount++;
 		break;
 	}
+	default:
+		break;
 }
 
 void pauseSound(int num)
@@ -88,17 +94,24 @@ void pauseSound(int num)
 	case 1:
 		Mix_Pause(1);
 		break;
+
 	case 2:
 		Mix_Pause(2);
 		break;
+
 	case 3:
 		Mix_Pause(3);
 		break;
+
 	case 4:
 		Mix_Pause(4);
 		break;
+
 	case 5:
 		Mix_Pause(4);
+		break;
+
+	default:
 		break;
 	}
 }
