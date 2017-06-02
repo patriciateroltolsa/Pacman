@@ -66,8 +66,8 @@ void Ghost::drawGhost3D(float r, float g, float b)
 {
 	glPushMatrix();
 	glColor3f(r, g, b);
-	glTranslated(this->x * squareSize, this->y  * squareSize, 0);
-	glScaled(1, 1, 2);
+	glTranslated(this->x * squareSize, this->y  * squareSize, 0); // Move world coordinate to ghost coordinate
+	glScaled(1, 1, 2); //Make sphere ellipse
 	glutSolidSphere(16, 50, 50);
 	glPopMatrix();
 }
