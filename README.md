@@ -15,8 +15,7 @@
 
 ## Execution screen
 <p align="center">
-<img src="https://cloud.githubusercontent.com/assets/13501499/8998702/20edfafc-3731-11e5-87c3-724d257d680b.PNG" width=400 height=400></img>
-<img src="https://cloud.githubusercontent.com/assets/13501499/8998704/250b1ff2-3731-11e5-84e5-c8e1967453cd.PNG" width=400 height=400></img>
+<img src="https://cloud.githubusercontent.com/assets/26589887/26737110/b7da1380-4803-11e7-8dd8-c8662316209b.png" width=500 height=500></img>
 </p>
 Pacman is a game of eating all the food while running away from the ghost.
 
