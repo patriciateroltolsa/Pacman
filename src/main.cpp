@@ -695,15 +695,8 @@ void reshape(int w, int h)
 	hh = h;
 }
 
-//Method to display the screen and its elements
-void display()
+void mainScreen()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0, 0.0, 0.0, 1.0); //Black
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
 	//3D and first person view
 	mode = 1;
 	reshape(ww, hh);
@@ -807,7 +800,10 @@ void display()
 		glLoadIdentity();
 		welcomeScreen();
 	}
+}
 
+void mapScreen()
+{
 	//Map & Information
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
@@ -915,7 +911,20 @@ void display()
 
 	glPopMatrix();
 	glPopMatrix();
+}
 
+//Method to display the screen and its elements
+void display()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 1.0); //Black
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	mainScreen();
+	mapScreen();
+	
 	glutSwapBuffers();
 }
 
