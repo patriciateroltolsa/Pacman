@@ -36,13 +36,13 @@ Download all the files and put it on your project and include the libraries.
 ## How to play
 Use followed keys to move pacman for eating food and running away from the ghost!
 
-* -w : move pacman up
+* -w : move pacman in current direction
 
-* -s : move pacman down
+* -s : rotate pacman to back
 
-* -d : move pacman right
+* -d : rotate pacman to right
 
-* -a : move pacman left
+* -a : rotate pacman to left
 
 * space : restart the game
 
