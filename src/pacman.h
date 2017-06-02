@@ -11,16 +11,17 @@ class Pacman
 {
 private:
 	float squareSize;
+
 public:
-	float x, y;
+	float x, y; // Coordinate of pacman
 	float mouth_angle;
-	float life;//
+	float life; //Left life of game
+
 	Pacman();
 	~Pacman();
 
 	void setPacman(float x, float y, float angle);
 
-	//Method to draw the pacman character through consicutive circle algorithm
 	void drawPacman2D(float rotation);
 	void drawPacman3D(float rotation);
 
