@@ -20,7 +20,7 @@ void Ghost::setGhost(float x, float y, int id)
 	this->id = id;
 }
 
-//Method to draw the monster character through consecutive circles algorithm
+//Method to draw the ghost character through consecutive circles algorithm
 void Ghost::drawGhost2D(float r, float g, float b)
 {
 	int x, y; // Coordinate of ghosts
@@ -61,7 +61,7 @@ void Ghost::drawGhost2D(float r, float g, float b)
 }
 
 
-//Method to draw the monster character through consecutive circles algorithm
+//Method to draw the ghost character through sphere
 void Ghost::drawGhost3D(float r, float g, float b)
 {
 	glPushMatrix();
