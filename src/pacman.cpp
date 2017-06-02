@@ -30,7 +30,7 @@ void Pacman::drawPacman2D(float rotation)
 	glColor3f(1.0, 1.0, 0.0); //Yellow
 
 	//Improved double for statement with one for statement
-	for (int i = 0 + mouth_angle; i < 360 - mouth_angle; i++) //mouth_angle's range is 0~45degree
+	for (int i = 0 + mouth_angle; i < 360 - mouth_angle; i++) //Mouth_angle's range is 0~45degree
 	{
 		glVertex2f(this->x*squareSize, this->y*squareSize);
 		x = 16 * cos((i + 90 * rotation) * M_PI / 180.0) + (this->x*squareSize);
