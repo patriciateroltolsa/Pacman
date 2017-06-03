@@ -959,8 +959,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(750, 750);
 	glutInitWindowPosition(0, 0);
-	glutCreateWindow("PACMAN - by Patricia Terol");
-
+	glutCreateWindow("3D PACMAN");
 
 	//Define all the control functions
 	glutDisplayFunc(display);
