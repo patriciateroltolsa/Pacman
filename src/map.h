@@ -14,6 +14,8 @@ class Map
 {
 private:
 	float squareSize;
+    float blue[3];
+    float black[3];
 
 	vector<float> border;
 	vector<float> obstaclesTop;
@@ -22,7 +24,7 @@ private:
 
 public:
 	vector<vector<bool>> bitmap; // 2d image of which squares are blocked and which are clear for pacman to move in
-	int level; 
+	int level;
 
 public:
 	Map();

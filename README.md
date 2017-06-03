@@ -15,8 +15,10 @@
 
 ## Execution screen
 <p align="center">
-<img src="https://cloud.githubusercontent.com/assets/13501499/8998702/20edfafc-3731-11e5-87c3-724d257d680b.PNG" width=400 height=400></img>
-<img src="https://cloud.githubusercontent.com/assets/13501499/8998704/250b1ff2-3731-11e5-84e5-c8e1967453cd.PNG" width=400 height=400></img>
+<img src="http://postfiles11.naver.net/MjAxNzA2MDNfMjQ3/MDAxNDk2NDI3NTM4OTkw.lM-73dN0Pw75KvLH8PXZ-qaqyrv8f7SukDGlPFMhHsgg.cg3DU_tidmPRbBPzYx3OAvNmpp1pGA0AZsMM2B3cZ8Eg.GIF.ekdud014/execute_screen.gif?type=w2" width=550 height=500></img>
+<a href="https://youtu.be/BbxKEIPWkfY">
+<img src="https://cloud.githubusercontent.com/assets/26589887/26737351/a8c58fcc-4804-11e7-87e5-db4c47cc8818.png"  height=500></img>
+</a>
 </p>
 Pacman is a game of eating all the food while running away from the ghost.
 
@@ -36,13 +38,13 @@ Download all the files and put it on your project and include the libraries.
 ## How to play
 Use followed keys to move pacman for eating food and running away from the ghost!
 
-* -w : move pacman up
+* -w : move pacman in current direction
 
-* -s : move pacman down
+* -s : rotate pacman to back
 
-* -d : move pacman right
+* -d : rotate pacman to right
 
-* -a : move pacman left
+* -a : rotate pacman to left
 
 * space : restart the game
 
@@ -50,7 +52,7 @@ Use followed keys to move pacman for eating food and running away from the ghost
 
 The food is 1 point for each food. You'll win if you eat all the food
 
-## Original
+## Original project
 https://github.com/patriciateroltolsa/Pacman
 
 ## How to contribute
@@ -79,3 +81,6 @@ Connect us here
 
 * <qpab7722@gamil.com>
 * https://github.com/qpab7722
+
+## Source
+- Sound file is from http://www.classicgaming.cc/classics/pac-man/sounds
