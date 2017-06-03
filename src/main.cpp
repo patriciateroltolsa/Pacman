@@ -485,9 +485,22 @@ void keyOperations()
 			resetGame();
 			replay = true;
 		}
-		else if (replay && over) //Restart the game
+		else if (replay && over && !win) //Restart the game
 		{
 			replay = false;
+		}
+
+		if (win) //Win the game & restart
+		{
+			win = false;
+			map.level = 1;
+			pacman.life = 3;
+			died = 0;
+			resetGame();
+		}
+		else if (died > 3) //Lose the game & restart
+		{
+			map.level = 1;
 		}
 	}
 
@@ -560,32 +573,33 @@ void resultScreen()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 
+	if (win)
+	{
+		char* message = "*************************************";
+		glRasterPos2f(170, 250);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
+		message = "CONGRATULATIONS, YOU WON! ";
+		glColor3f(1, 1, 1);
+		glRasterPos2f(200, 300);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
+		message = "*************************************";
+		glRasterPos2f(170, 350);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
+		message = "To start or restart the game, press the space key.";
+		glRasterPos2f(170, 550);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+	}
+
 	if (showResult)
 	{
-		if (win)
-		{
-			char* message = "*************************************";
-			glRasterPos2f(170, 250);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
-
-			message = "CONGRATULATIONS, YOU WON! ";
-			glColor3f(1, 1, 1);
-			glRasterPos2f(200, 300);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
-
-			message = "*************************************";
-			glRasterPos2f(170, 350);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
-
-			message = "To start or restart the game, press the space key.";
-			glRasterPos2f(170, 550);
-			while (*message)
-				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
-		}
-		else
+		if (!win)
 		{
 			char* message = "*************************";
 			glRasterPos2f(210, 250);
@@ -627,7 +641,7 @@ void resultScreen()
 		died = 0;
 		pacman.life = 3;
 	}
-	else
+	else if (!showResult && !win)
 	{
 		char* message = " Continue? ";
 		glRasterPos2f(320, 350);
@@ -905,7 +919,11 @@ void mapScreen()
 			Pinky.drawGhost2D(1.0, 0.0, 0.6);
 
 			Sleep(10);
-			playSound(1);
+
+			if (map.level < 2)
+			{
+				playSound(1);
+			}
 		}
 	}
 

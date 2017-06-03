@@ -82,41 +82,7 @@ void playSound(int num)
 		}
 		winCount++;
 		break;
-	}
-	default:
-		break;
-}
-
-void pauseSound(int num)
-{
-	switch (num)
-	{
-	case 1:
-		Mix_Pause(1);
-		break;
-
-	case 2:
-		Mix_Pause(2);
-		break;
-
-	case 3:
-		Mix_Pause(3);
-		break;
-
-	case 4:
-		Mix_Pause(4);
-		break;
-
-	case 5:
-		Mix_Pause(4);
-		break;
-
 	default:
 		break;
 	}
-}
-
-void freeSounds()
-{
-	Mix_CloseAudio();
 }
