@@ -648,6 +648,12 @@ void resultScreen()
 		glColor3f(1, 1, 1);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
+		message = "If you want to continue, press the space key ";
+		glRasterPos2f(200, 410);
+		glColor3f(1, 1, 1);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 	}
 }
 
