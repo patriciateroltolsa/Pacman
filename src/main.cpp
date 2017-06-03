@@ -291,7 +291,7 @@ void keyOperations()
 		xx = 10 * sin(cam_angle) + viewer[0];
 		zz = 10 * cos(cam_angle) + viewer[2];
 
-		if (rotation == 1) //down direction
+		if (rotation == 1) //Down direction
 		{
 			rotation = 0;
 		}
@@ -309,7 +309,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['d'] || keyStates['D']) //rotate to right
+	if (keyStates['d'] || keyStates['D']) //Rotate to right
 	{
 		keyStates['d'] = false;
 		keyStates['D'] = false;
@@ -336,7 +336,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['s'] || keyStates['S']) //rotate to back
+	if (keyStates['s'] || keyStates['S']) //Rotate to back
 	{
 		keyStates['s'] = false;
 		keyStates['S'] = false;
@@ -363,7 +363,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['w'] || keyStates['W']) //go straight 
+	if (keyStates['w'] || keyStates['W']) //Go straight 
 	{
 		if (rotation == 0)
 		{
