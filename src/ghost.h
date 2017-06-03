@@ -16,15 +16,14 @@ private:
 	float squareSize;
 
 public:
-	float x, y;
-	int id;
+	float x, y; //Coordinate of ghost
+	int id; //Assign id to each ghost
 
 	Ghost(float x, float y, int id);
 	~Ghost();
 
 	void setGhost(float x, float y, int id);
 
-	//Method to draw the monster character through consecutive circles algorithm
 	void drawGhost2D(float r, float g, float b);
 	void drawGhost3D(float r, float g, float b);
 
