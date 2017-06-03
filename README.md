@@ -60,7 +60,7 @@ https://github.com/patriciateroltolsa/Pacman
 - Create your branch name prefix_function&num_youname (refer issue#30)
 - Pull requests us! 
 
-Connect us here
+Contact us here
 
 **Dayoung Park(team leader)**  
 
