@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--
+	Interphase by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Elements - Interphase by TEMPLATED</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-xlarge.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<h1><a href="index.html">Interphase</a></h1>
+				<nav id="nav">
+					<ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="generic.html">Project</a></li>
+                        <li><a href="elements.html">Milestone</a></li>
+                        <li><a href="excute.html">Execute</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="container">
+
+					<header class="major">
+						<h2>How to Execute?</h2>
+						<p>Our project is executable on Windows(<a href="https://www.visualstudio.com/ko-kr/productinfo/vs2017-system-requirements-vs">Visual Studio 2017</a>) and Mac(<a href="https://developer.apple.com/xcode/")>Xcode</a>).</p>
+                        <div class="table-wrapper">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>OS</b></td>
+                                        <td><b>Development Tools</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i>Winows</i></td>
+                                        <td><i>Visual Studio 2017</i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i>Mac OS</i></td>
+                                        <td><i>Xcode</i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+					</header>
+
+					<!-- Text -->
+						<section>
+							<h3>1. Download all the files</h3>
+							<p>You can <b>clone</b> our project in your local repository.<br>
+                            <code>git clone https://github.com/ekdud014/OSS_pacman.git</code>
+                            <hr />
+
+
+                            <h3>2. Download Library</h3>
+                            <a href="https://www.libsdl.org/">[SDL] </a> 1.2(with SDL Mixer) &amp <a href="https://www.opengl.org/">[OpenGL]</a>
+                            <hr />
+							
+                            <h3>3 .Put it on your project depending on your environment</h3>
+                            <li>Windows
+                                
+                                </li>
+                            
+                            <li>Mac OS<p>
+                                - Need to add OpenGL.framework, GLUT.framework, SDL_mixer and SDL in Link Binary With Libraries of Build Phases.<br><br>
+                                - Delete the code below in main.cpp(Window.h is not available on mac)<br>
+                                <code>
+                                    #include &lt Windows.h &gt </code> <code> sleep(10);
+                                    </code><br><br>
+                                - Delete the code below in sound.h <code>#include &lt Windows.h &gt</code><br><br>
+                                - Modify the code below in sound.h <code>#include &lt SDL_mixer.h &gt</code> -><code> #include "SDL_mixer.h"</code>
+                                </li>
+                                
+                                </section><br><br>
+                            
+                            <header class="major">
+                            <h2>How to Play?</h2>
+                            <p>Use followed keys to move pacman for eating food and running away from the ghost!</p>
+                            </header>
+                            <li> -w : move pacman in current direction</li><p>
+                            <li> -s : rotate pacman to back</li><p>
+                            <li> -d : rotate pacman to right</li><p>
+                            <li> -a : rotate pacman to left</li><p>
+                            <li> space : restart the game</li><p>
+                            <li> ESC : exit the game</li><br>
+                            The food is 1 point for each food. You'll win if you eat all the food
+                            
+                        </section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<div class="row">
+						<section class="4u 6u(medium) 12u$(small)">
+							<h3>Lorem ipsum</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, cumque!</p>
+							<ul class="alt">
+								<li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+								<li><a href="#">Quod adipisci perferendis et itaque.</a></li>
+								<li><a href="#">Itaque eveniet ullam, veritatis reiciendis?</a></li>
+								<li><a href="#">Accusantium repellat accusamus a, soluta.</a></li>
+							</ul>
+						</section>
+						<section class="4u 6u$(medium) 12u$(small)">
+							<h3>Nostrum, repellat!</h3>
+							<p>Tenetur voluptate exercitationem eius tempora! Obcaecati suscipit, soluta earum blanditiis.</p>
+							<ul class="alt">
+								<li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+								<li><a href="#">Id inventore, qui necessitatibus sunt.</a></li>
+								<li><a href="#">Deleniti eum odit nostrum eveniet.</a></li>
+								<li><a href="#">Illum consectetur quibusdam eos corporis.</a></li>
+							</ul>
+						</section>
+						<section class="4u$ 12u$(medium) 12u$(small)">
+							<h3>Contact Us</h3>
+							<ul class="icons">
+								<li><a href="#" class="icon rounded fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon rounded fa-facebook"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon rounded fa-pinterest"><span class="label">Pinterest</span></a></li>
+								<li><a href="#" class="icon rounded fa-google-plus"><span class="label">Google+</span></a></li>
+								<li><a href="#" class="icon rounded fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="tabular">
+								<li>
+									<h3>Address</h3>
+									1234 Somewhere Road<br>
+									Nashville, TN 00000
+								</li>
+								<li>
+									<h3>Mail</h3>
+									<a href="#">someone@untitled.tld</a>
+								</li>
+								<li>
+									<h3>Phone</h3>
+									(000) 000-0000
+								</li>
+							</ul>
+						</section>
+					</div>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li>
+						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
+						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
+					</ul>
+				</div>
+			</footer>
+
+	</body>
+</html>
