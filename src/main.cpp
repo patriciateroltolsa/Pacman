@@ -75,7 +75,8 @@ int points = 0; //Total points collected
 int died = 0;//Count died number of time
 
 double viewer[] = { 0, 0, 1 }; //Initial viewer location
-
+							   
+//Initializes the viewer camera
 void viewerInit()
 {
 	viewer[0] = -30;
@@ -191,16 +192,6 @@ void updateGhost(Ghost *ghost)
 void keyPressed(unsigned char key, int x, int y)
 {
 	keyStates[key] = true;
-
-	//viewer change with keyboard input
-	if (key == 'x') viewer[0] -= 1;
-	if (key == 'X') viewer[0] += 1;
-	if (key == 'y') viewer[1] -= 1;
-	if (key == 'Y') viewer[1] += 1;
-	if (key == 'z') viewer[2] -= 1;
-	if (key == 'Z') viewer[2] += 1;
-
-	glutPostRedisplay();
 }
 
 //Method to unset the released key
