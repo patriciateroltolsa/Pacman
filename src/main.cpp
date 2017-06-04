@@ -291,7 +291,7 @@ void keyOperations()
 		xx = 10 * sin(cam_angle) + viewer[0];
 		zz = 10 * cos(cam_angle) + viewer[2];
 
-		if (rotation == 1) //down direction
+		if (rotation == 1) //Down direction
 		{
 			rotation = 0;
 		}
@@ -309,7 +309,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['d'] || keyStates['D']) //rotate to right
+	if (keyStates['d'] || keyStates['D']) //Rotate to right
 	{
 		keyStates['d'] = false;
 		keyStates['D'] = false;
@@ -336,7 +336,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['s'] || keyStates['S']) //rotate to back
+	if (keyStates['s'] || keyStates['S']) //Rotate to back
 	{
 		keyStates['s'] = false;
 		keyStates['S'] = false;
@@ -363,7 +363,7 @@ void keyOperations()
 		}
 	}
 
-	if (keyStates['w'] || keyStates['W']) //go straight 
+	if (keyStates['w'] || keyStates['W']) //Go straight 
 	{
 		if (rotation == 0)
 		{
@@ -648,6 +648,12 @@ void resultScreen()
 		glColor3f(1, 1, 1);
 		while (*message)
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
+
+		message = "If you want to continue, press the space key ";
+		glRasterPos2f(200, 410);
+		glColor3f(1, 1, 1);
+		while (*message)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 	}
 }
 
@@ -664,9 +670,9 @@ void welcomeScreen()
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
 
-	message = "PACMAN - by Patricia Terol";
+	message = "3D PACMAN";
 	glColor3f(1, 1, 1);
-	glRasterPos2f(225, 250);
+	glRasterPos2f(300, 250);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
 
@@ -675,13 +681,18 @@ void welcomeScreen()
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *message++);
 
-	message = "To control Pacman use A to go right, D to go left, W to go up and S to go down.";
-	glRasterPos2f(50, 400);
+	message = "**How to play**";
+	glRasterPos2f(310, 400);
+	while (*message)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
+
+	message = "Use A to turn right, D to turn left, S to turn back, and W to go straight.";
+	glRasterPos2f(100, 450);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 
 	message = "To start or restart the game, press the space key.";
-	glRasterPos2f(170, 450);
+	glRasterPos2f(170, 500);
 	while (*message)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 }
@@ -954,8 +965,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(750, 750);
 	glutInitWindowPosition(0, 0);
-	glutCreateWindow("PACMAN - by Patricia Terol");
-
+	glutCreateWindow("3D PACMAN");
 
 	//Define all the control functions
 	glutDisplayFunc(display);
