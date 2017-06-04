@@ -49,7 +49,7 @@ GLsizei ww, hh; //screen size
 
 bool replay = false; //Check if starts a new game
 bool over = true; //Check for the game to be over
-bool win = false; //Check for win the game
+bool winCheck = false; //Check for win the game
 bool callOnce = false; //Check call sound function once
 bool* keyStates = new bool[256]; //Record of all keys pressed
 bool showResult = false;//Check for show result or continue
@@ -476,14 +476,14 @@ void keyOperations()
 			resetGame();
 			replay = true;
 		}
-		else if (replay && over && !win) //Restart the game
+		else if (replay && over && !winCheck) //Restart the game
 		{
 			replay = false;
 		}
 
-		if (win) //Win the game & restart
+		if (winCheck) //Win the game & restart
 		{
-			win = false;
+			winCheck = false;
 			map.level = 1;
 			pacman.life = 3;
 			died = 0;
@@ -544,7 +544,7 @@ void gameOver()
 	{
 		if (points == 106)
 		{
-			win = true;
+			winCheck = true;
 			over = true;
 		}
 	}
@@ -564,7 +564,7 @@ void resultScreen()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 
-	if (win)
+	if (winCheck)
 	{
 		char* message = "*************************************";
 		glRasterPos2f(170, 250);
@@ -590,7 +590,7 @@ void resultScreen()
 
 	if (showResult)
 	{
-		if (!win)
+		if (!winCheck)
 		{
 			char* message = "*************************";
 			glRasterPos2f(210, 250);
@@ -632,7 +632,7 @@ void resultScreen()
 		died = 0;
 		pacman.life = 3;
 	}
-	else if (!showResult && !win)
+	else if (!showResult && !winCheck)
 	{
 		char* message = " Continue? ";
 		glRasterPos2f(320, 350);
@@ -781,7 +781,7 @@ void mainScreen()
 		}
 		else
 		{
-			if (!win)
+			if (!winCheck)
 			{
 				playSound(3);
 			}
