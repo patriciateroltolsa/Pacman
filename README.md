@@ -36,7 +36,7 @@ We use Windows 7 ([Visual Studio 2013](https://msdn.microsoft.com/library/dd8318
 ## How to execute
 Download all the files and put it on your project and include the libraries.
 
-Please refer to the [User Guide](https://github.com/ekdud014/OSS_pacman/wiki) for details.
+Please refer to the [User Guide](https://github.com/ekdud014/OSS_pacman/wiki/User-Guide) for details.
 
 ## How to play
 Use followed keys to move pacman for eating dot and running away from the ghost!
