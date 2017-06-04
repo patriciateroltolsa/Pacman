@@ -39,7 +39,7 @@ Download all the files and put it on your project and include the libraries.
 Please refer to the [User Guide](https://github.com/ekdud014/OSS_pacman/wiki) for details.
 
 ## How to play
-Use followed keys to move pacman for eating food and running away from the ghost!
+Use followed keys to move pacman for eating dot and running away from the ghost!
 
 * -w : move pacman in current direction
 
