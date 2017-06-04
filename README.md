@@ -20,7 +20,7 @@
 <img src="https://cloud.githubusercontent.com/assets/26589887/26737351/a8c58fcc-4804-11e7-87e5-db4c47cc8818.png"  height=500></img>
 </a>
 </p>
-Pacman is a game of eating all the food while running away from the ghost.
+Pacman is a game of eating all the dot while running away from the ghost.
 
 ## License
 Follows [GPL v3](https://github.com/ekdud014/OSS_pacman/blob/master/LICENSE.txt)
@@ -29,13 +29,14 @@ Follows [GPL v3](https://github.com/ekdud014/OSS_pacman/blob/master/LICENSE.txt)
 We use library [SDL](https://www.libsdl.org/) 1.2 (with SDL Mixer) & [OpenGL](https://www.opengl.org/)
 
 ## Execution environment
-It works in compiler C++11. (If you use Visual Studio, you must use Visual Studio 2011 or later.) 
+It works in compiler C++11. (If you use Visual Studio, you must use Visual Studio 2011 or later.)
+
 We use Windows 7 ([Visual Studio 2013](https://msdn.microsoft.com/library/dd831853(v=vs.120).aspx)) & Windows 10 ([Visual Studio 2017](https://www.visualstudio.com/ko-kr/productinfo/vs2017-system-requirements-vs)) & Mac OS X ([Xcode](https://developer.apple.com/xcode/))
 
 ## How to execute
 Download all the files and put it on your project and include the libraries.
 
-Please refer to the [wiki](https://github.com/ekdud014/OSS_pacman/wiki) for details.
+Please refer to the [User Guide](https://github.com/ekdud014/OSS_pacman/wiki) for details.
 
 ## How to play
 Use followed keys to move pacman for eating food and running away from the ghost!
@@ -52,7 +53,7 @@ Use followed keys to move pacman for eating food and running away from the ghost
 
 * ESC : exit the game
 
-The food is 1 point for each food. You'll win if you eat all the food
+The dot is 1 point for each dot. You'll win if you eat all the dot.
 
 ## Original project
 https://github.com/patriciateroltolsa/Pacman
@@ -62,9 +63,9 @@ https://github.com/patriciateroltolsa/Pacman
 - Create your branch name prefix_function&num_youname (refer issue#30)
 - Pull requests us! 
 
-Contact us here
+Contact us here.
 
-**Dayoung Park(team leader)**  
+**Dayoung Park (Team leader)**  
 
 * <ekdud014@naver.com>
 * https://github.com/ekdud014
