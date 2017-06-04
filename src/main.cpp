@@ -75,7 +75,8 @@ int points = 0; //Total points collected
 int died = 0;//Count died number of time
 
 double viewer[] = { 0, 0, 1 }; //Initial viewer location
-
+							   
+//Initializes the viewer camera
 void viewerInit()
 {
 	viewer[0] = -30;
