@@ -54,10 +54,11 @@ static int rotation = 0; // orientation of pacman
 
 vector<float> monster1 = { 10.5,	8.5,	1.0 };
 vector<float> monster2 = { 13.5,	1.5,	2.0 };
-vector<float> monster3 = { 4.5,		6.5,	3.0 };
-vector<float> monster4 = { 2.5,		13.5,	4.0 };
+vector<float> monster3 = { 4.5,	6.5,	3.0 };
+vector<float> monster4 = { 2.5,	13.5,	4.0 };
 
-static vector<vector<float>> monsta_list = { monster1, monster2, monster3, monster4 }; // initialize vector of monsters
+vector<vector<float>> monsta_list = { monster1, monster2, monster3, monster4 }; // initialize vector of monsters
+
 
 static vector<int> border = { 0, 0, 15, 1, 15, 15, 14, 1, 0, 14, 15, 15, 1, 14, 0, 0 }; //coordinates of the border walls
 
@@ -72,6 +73,8 @@ int points = 0; // total points collected
 
 //Initializes the game with the appropiate information 
 void init(void) {
+
+
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
@@ -200,7 +203,7 @@ void drawMonster(float positionX, float positionY, float r, float g, float b) {
 }
 
 //Method to update the position of the monsters randomly
-void updateMonster(vector<float> monster) {
+void updateMonster(vector<float> &monster) { 
 	//find the current position of the monster
 	int x1Quadrant = (int)((monster[0] - (2 / squareSize)) - (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
 	int x2Quadrant = (int)((monster[0] + (2 / squareSize)) + (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
@@ -446,13 +449,6 @@ void welcomeScreen() {
 }
 
 
-
-void updateAll() { // Iterates through monsta_list and updates each iteration
-	for (auto& monster : monsta_list) {
-		updateMonster(monster);
-	}
-}
-
 void display() { //Method to display the screen and its elements
 	if (points == 1) {
 		over = false;
@@ -465,7 +461,11 @@ void display() { //Method to display the screen and its elements
 			drawLaberynth();
 			drawFood((1.5 + xIncrement) * squareSize, (1.5 + yIncrement) * squareSize);
 			drawPacman(1.5 + xIncrement, 1.5 + yIncrement, rotation);
-			updateAll();
+
+			for (vector<float> m : monsta_list) {
+				updateMonster(m);
+			}
+
 			drawMonster(monster1[0], monster1[1], 0.0, 1.0, 1.0); //cyan
 			drawMonster(monster2[0], monster2[1], 1.0, 0.0, 0.0); //red
 			drawMonster(monster3[0], monster3[1], 1.0, 0.0, 0.6); //magenta
@@ -491,7 +491,6 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 }
 
-
 //Main functions that controls the running of the game
 int main(int argc, char** argv) {
 	//initialize and create the screen
@@ -513,3 +512,4 @@ int main(int argc, char** argv) {
 	glutMainLoop();
 	return 0;
 }
+
