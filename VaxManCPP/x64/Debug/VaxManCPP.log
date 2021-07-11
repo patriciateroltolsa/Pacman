@@ -1,0 +1,15 @@
+﻿main.obj : error LNK2019: unresolved external symbol glutInit referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutInitDisplayMode referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutInitWindowPosition referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutInitWindowSize referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutMainLoop referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutCreateWindow referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutSwapBuffers referenced in function "void __cdecl display(void)" (?display@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glutDisplayFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutReshapeFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutKeyboardFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutIdleFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutKeyboardUpFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol glutBitmapCharacter referenced in function "void __cdecl resultsDisplay(void)" (?resultsDisplay@@YAXXZ)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\VS\lib\x86\glut32.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\jibra\Documents\TheForage\cppVaxMan\x64\Debug\VaxManCPP.exe : fatal error LNK1120: 13 unresolved externals
