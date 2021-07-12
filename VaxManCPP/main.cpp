@@ -18,6 +18,26 @@
 #include <math.h>
 using namespace std;
 
+class Ghost {
+	public:
+		void setSpawn(vector<float> in);
+		vector<float> getSpawn(void);
+		Ghost(vector<float> spawn);
+	private:
+	vector<float> spawn;
+};
+
+Ghost::Ghost(vector<float> in) {
+	spawn = in;
+}
+void Ghost::setSpawn(vector<float> in) {
+	spawn = in;
+}
+
+vector<float> Ghost::getSpawn(void) {
+	return spawn;
+}
+
 static bool replay = false; //check if starts a new game
 static bool over = true; //check for the game to be over
 static float squareSize = 50.0; //size of one square on the game
@@ -25,18 +45,17 @@ static float xIncrement = 0; // x movement on pacman
 static float yIncrement = 0; // y movement on pacman
 static int rotation = 0; // orientation of pacman
 
-static float* monster1 = new float[3]{ 10.5, 8.5, 1.0 }; //coordinates and direction of first monster
-static float* monster2 = new float[3]{ 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
-static float* monster3 = new float[3]{ 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
-static float* monster4 = new float[3]{ 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
+vector<float> monster1 = { 10.5, 8.5, 1.0 }; //coordinates and direction of first monster
+vector<float> monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
+vector<float> monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
+vector<float> monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
 
-static vector<float*> pinky_instances = { monster1 }; //create vectors for each type of ghost
-static vector<float*> blinky_instances = { monster2 };
-static vector<float*> inky_instances = { monster3 };
-static vector<float*> clyde_instances = { monster4 };
+static vector<vector<float>> pinky_instances = { monster1 }; //create vectors for each type of ghost
+static vector<vector<float>> blinky_instances = { monster2 };
+static vector<vector<float>> inky_instances = { monster3 };
+static vector<vector<float>> clyde_instances = { monster4 };
 
-static vector<vector<float*>> ghost_instances = { pinky_instances, blinky_instances, inky_instances, clyde_instances };
-
+static vector<vector<vector<float>>> ghost_instances = { pinky_instances, blinky_instances, inky_instances, clyde_instances };
 
 static vector<int> border = { 0, 0, 15, 1, 15, 15, 14, 1, 0, 14, 15, 15, 1, 14, 0, 0 }; //coordinates of the border walls
 
@@ -179,7 +198,7 @@ void drawMonster(float positionX, float positionY, float r, float g, float b) {
 }
 
 //Method to update the position of the monsters randomly
-void updateMonster(float* monster) {
+void updateMonster(vector<float> monster) {
 	//find the current position of the monster
 	int x1Quadrant = (int)((monster[0] - (2 / squareSize)) - (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
 	int x2Quadrant = (int)((monster[0] + (2 / squareSize)) + (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
@@ -253,10 +272,10 @@ void resetGame() {
 	xIncrement = 0;
 	yIncrement = 0;
 	rotation = 0;
-	monster1 = new float[3]{ 10.5, 8.5, 1.0 };
-	monster2 = new float[3]{ 13.5, 1.5, 2.0 };
-	monster3 = new float[3]{ 4.5, 6.5, 3.0 };
-	monster4 = new float[3]{ 2.5, 13.5, 4.0 };
+	monster1 = { 10.5, 8.5, 1.0 };
+	monster2 = { 13.5, 1.5, 2.0 };
+	monster3 = { 4.5, 6.5, 3.0 };
+	monster4 = { 2.5, 13.5, 4.0 };
 	points = 0;
 	for (int i = 0; i < 256; i++) {
 		keyStates[i] = false;
@@ -451,10 +470,9 @@ void display() {
 
 			//static vector<	vector<vector<float>>	> ghost_instances = { pinky_instances, blinky_instances, inky_instances, clyde_instances };
 
-			for (auto& ghost_instance : ghost_instances) {
-				for (auto& monster : ghost_instance) {
+			for (vector<vector<float>>& ghost_instance : ghost_instances) {
+				for (vector<float>& monster: ghost_instance)
 					updateMonster(monster);
-				}
 			}
 
 			//updateMonster(monster1);
