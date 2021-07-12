@@ -7,27 +7,6 @@
 // Course: TheForage, EA Software Engineering Virtual Experience Internship
 // Project: VaxMan
 
-/*	Tasks:
-
-	Vax - Man can kill a ghost if he comes into contact with it(vaccinates it).
-	Contact with a ghost does not kill Vax - Man.
-	Each ghost that has not yet been hit multiplies itself every 30 seconds(the infection grows).
-	The goal of the game is to collect all the dots before the number of ghosts grows to 32 times the original number.
-
-*/
-
-
-/*
-	TODO:
-	- Edit ghost constructor to have an id property that can map to color
-
-
-
-
-
-
-*/
-
 #include <stdlib.h>
 #include <vector>
 #include <deque>
@@ -46,26 +25,18 @@ static float xIncrement = 0; // x movement on pacman
 static float yIncrement = 0; // y movement on pacman
 static int rotation = 0; // orientation of pacman
 
-						//size  x		y		direction	
-//float* monster1 = new float[3]{ 10.5,	8.5,	1.0 }; 
-//float* monster2 = new float[3]{ 13.5,	1.5,	2.0 }; 
-//float* monster3 = new float[3]{ 4.5,	6.5,	3.0 }; 
-//float* monster4 = new float[3]{ 2.5,	13.5,	4.0 }; 
-
-vector<float> monster1 = { 10.5,	8.5,	1.0 };
-vector<float> monster2 = { 13.5,	1.5,	2.0 };
-vector<float> monster3 = { 4.5,	6.5,	3.0 };
-vector<float> monster4 = { 2.5,	13.5,	4.0 };
-
-vector<vector<float>> monsta_list = { monster1, monster2, monster3, monster4 }; // initialize vector of monsters
+float* monster1 = new float[3]{ 10.5, 8.5, 1.0 }; //coordinates and direction of first monster
+float* monster2 = new float[3]{ 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
+float* monster3 = new float[3]{ 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
+float* monster4 = new float[3]{ 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
 
 
 static vector<int> border = { 0, 0, 15, 1, 15, 15, 14, 1, 0, 14, 15, 15, 1, 14, 0, 0 }; //coordinates of the border walls
 
 //coordinates of the obstacles (divided into 3 for clarity)
-static vector<int> obstaclesTop =		{ 2, 2, 3, 6, 3, 6, 4, 5, 4, 2, 5, 4, 5, 3, 6, 5, 6, 1, 9, 2, 7, 2, 8, 5, 9, 5, 10, 3, 10, 4, 11, 2, 11, 5, 12, 6, 12, 6, 13, 2 };
-static vector<int> obstaclesMiddle =	{ 2, 9, 3, 7, 3, 7, 4, 8, 4, 9, 5, 11, 5, 6, 6, 10, 6, 10, 7, 8, 7, 8, 8, 9, 6, 7, 7, 6, 8, 6, 9, 7, 10, 6, 9, 10, 9, 10, 8, 8, 11, 9, 10, 11, 11, 8, 12, 7, 12, 7, 13, 9 };
-static vector<int> obstaclesBottom =	{ 2, 10, 3, 13, 3, 13, 4, 12, 5, 12, 6, 13, 6, 13, 7, 11, 8, 11, 9, 13, 9, 13, 10, 12, 11, 12, 12, 13, 12, 13, 13, 10 };
+static vector<int> obstaclesTop = { 2, 2, 3, 6, 3, 6, 4, 5, 4, 2, 5, 4, 5, 3, 6, 5, 6, 1, 9, 2, 7, 2, 8, 5, 9, 5, 10, 3, 10, 4, 11, 2, 11, 5, 12, 6, 12, 6, 13, 2 };
+static vector<int> obstaclesMiddle = { 2, 9, 3, 7, 3, 7, 4, 8, 4, 9, 5, 11, 5, 6, 6, 10, 6, 10, 7, 8, 7, 8, 8, 9, 6, 7, 7, 6, 8, 6, 9, 7, 10, 6, 9, 10, 9, 10, 8, 8, 11, 9, 10, 11, 11, 8, 12, 7, 12, 7, 13, 9 };
+static vector<int> obstaclesBottom = { 2, 10, 3, 13, 3, 13, 4, 12, 5, 12, 6, 13, 6, 13, 7, 11, 8, 11, 9, 13, 9, 13, 10, 12, 11, 12, 12, 13, 12, 13, 13, 10 };
 static deque<float> food = { 1.5, 1.5, 1.5, 2.5, 1.5, 3.5, 1.5, 4.5, 1.5, 5.5, 1.5, 6.5, 1.5, 7.5, 1.5, 8.5, 1.5, 9.5, 1.5, 10.5, 1.5, 11.5, 1.5, 12.5, 1.5, 13.5, 2.5, 1.5, 2.5, 6.5, 2.5, 9.5, 2.5, 13.5, 3.5, 1.5, 3.5, 2.5, 3.5, 3.5, 3.5, 4.5, 3.5, 6.5, 3.5, 8.5, 3.5, 9.5, 3.5, 10.5, 3.5, 11.5, 3.5, 13.5, 4.5, 1.5, 4.5, 4.5, 4.5, 5.5, 4.5, 6.5, 4.5, 7.5, 4.5, 8.5, 4.5, 11.5, 4.5, 12.5, 4.5, 13.5, 5.5, 1.5, 5.5, 2.5, 5.5, 5.5, 5.5, 10.5, 5.5, 11.5, 5.5, 13.5, 6.5, 2.5, 6.5, 3.5, 6.5, 4.5, 6.5, 5.5, 6.5, 7.5, 6.5, 10.5, 6.5, 13.5, 7.5, 5.5, 7.5, 6.5, 7.5, 7.5, 7.5, 9.5, 7.5, 10.5, 7.5, 11.5, 7.5, 12.5, 7.5, 13.5, 8.5, 2.5, 8.5, 3.5, 8.5, 4.5, 8.5, 5.5, 8.5, 7.5, 8.5, 10.5, 8.5, 13.5, 9.5, 1.5, 9.5, 2.5, 9.5, 5.5, 9.5, 10.5, 9.5, 11.5, 9.5, 13.5, 10.5, 1.5, 10.5, 4.5, 10.5, 5.5, 10.5, 6.5, 10.5, 7.5, 10.5, 8.5, 10.5, 11.5, 10.5, 12.5, 10.5, 13.5, 11.5, 1.5, 11.5, 2.5, 11.5, 3.5, 11.5, 4.5, 11.5, 5.5, 11.5, 6.5, 11.5, 8.5, 11.5, 9.5, 11.5, 10.5, 11.5, 11.5, 11.5, 13.5, 12.5, 1.5, 12.5, 6.5, 12.5, 9.5, 12.5, 13.5, 13.5, 1.5, 13.5, 2.5, 13.5, 3.5, 13.5, 4.5, 13.5, 5.5, 13.5, 6.5, 13.5, 7.5, 13.5, 8.5, 13.5, 9.5, 13.5, 10.5, 13.5, 11.5, 13.5, 12.5, 13.5, 13.5 };
 static vector<vector<bool>> bitmap; // 2d image of which squares are blocked and which are clear for pacman to move in 
 bool* keyStates = new bool[256]; // record of all keys pressed 
@@ -73,8 +44,6 @@ int points = 0; // total points collected
 
 //Initializes the game with the appropiate information 
 void init(void) {
-
-
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
@@ -203,7 +172,7 @@ void drawMonster(float positionX, float positionY, float r, float g, float b) {
 }
 
 //Method to update the position of the monsters randomly
-void updateMonster(vector<float> &monster) { 
+void updateMonster(float* monster, int id) {
 	//find the current position of the monster
 	int x1Quadrant = (int)((monster[0] - (2 / squareSize)) - (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
 	int x2Quadrant = (int)((monster[0] + (2 / squareSize)) + (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
@@ -276,10 +245,10 @@ void resetGame() {
 	xIncrement = 0;
 	yIncrement = 0;
 	rotation = 0;
-	monster1 = { 10.5,	8.5,	1.0 };
-	monster2 = { 13.5,	1.5,	2.0 };
-	monster3 = { 4.5,		6.5,	3.0 };
-	monster4 = { 2.5,		13.5,	4.0 };
+	monster1 = new float[3]{ 10.5, 8.5, 1.0 };
+	monster2 = new float[3]{ 13.5, 1.5, 2.0 };
+	monster3 = new float[3]{ 4.5, 6.5, 3.0 };
+	monster4 = new float[3]{ 2.5, 13.5, 4.0 };
 	points = 0;
 	for (int i = 0; i < 256; i++) {
 		keyStates[i] = false;
@@ -448,8 +417,8 @@ void welcomeScreen() {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 }
 
-
-void display() { //Method to display the screen and its elements
+//Method to display the screen and its elements
+void display() {
 	if (points == 1) {
 		over = false;
 	}
@@ -461,11 +430,10 @@ void display() { //Method to display the screen and its elements
 			drawLaberynth();
 			drawFood((1.5 + xIncrement) * squareSize, (1.5 + yIncrement) * squareSize);
 			drawPacman(1.5 + xIncrement, 1.5 + yIncrement, rotation);
-
-			for (vector<float> m : monsta_list) {
-				updateMonster(m);
-			}
-
+			updateMonster(monster1, 1);
+			updateMonster(monster2, 2);
+			updateMonster(monster3, 3);
+			updateMonster(monster4, 4);
 			drawMonster(monster1[0], monster1[1], 0.0, 1.0, 1.0); //cyan
 			drawMonster(monster2[0], monster2[1], 1.0, 0.0, 0.0); //red
 			drawMonster(monster3[0], monster3[1], 1.0, 0.0, 0.6); //magenta
@@ -491,6 +459,7 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 }
 
+
 //Main functions that controls the running of the game
 int main(int argc, char** argv) {
 	//initialize and create the screen
@@ -512,4 +481,3 @@ int main(int argc, char** argv) {
 	glutMainLoop();
 	return 0;
 }
-
