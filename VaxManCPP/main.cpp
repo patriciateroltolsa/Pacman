@@ -2,6 +2,20 @@
 // Course: CSE 2050
 // Project: assign10
 
+// "VaxMan" Edits
+// Authors: Jibran Absarulislam and Nixon Puertollano
+// Course: TheForage, EA Software Engineering Virtual Experience Internship
+// Project: VaxMan
+
+// TODO:
+/*
+	1) Ghosts die when Vaxman touches them
+	2) After n seconds, ghosts duplicate
+	3) Game ends if ghost count >= 128
+
+
+*/
+
 #include <stdlib.h>
 #include <vector>
 #include <array>
@@ -420,6 +434,10 @@ void welcomeScreen() {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *message++);
 }
 
+void duplicateGhosts() {
+
+}
+
 //Method to display the screen and its elements
 void display() {
 	if (points == 1) {
@@ -433,21 +451,27 @@ void display() {
 			drawLaberynth();
 			drawFood((1.5 + xIncrement) * squareSize, (1.5 + yIncrement) * squareSize);
 			drawPacman(1.5 + xIncrement, 1.5 + yIncrement, rotation);
-
+			
+			int it = 0; // 0, 1, 2, 3
+						// 0: 
 			for (auto list : all_ghosts) {
+				float c1, c2, c3;
+				if (it == 0)		{ c1 = 0.0; c2 = 1.0; c3 = 1.0; } //set colors based on list 
+				else if (it == 1)	{ c1 = 1.0; c2 = 0.0; c3 = 0.0; }
+				else if (it == 2)	{ c1 = 1.0; c2 = 0.0; c3 = 0.6; }
+				else				{ c1 = 1.0; c2 = 0.3; c3 = 0.0; }
+
 				for (auto ghost : *list) {
 					updateMonster(*ghost);
+					drawMonster(ghost->at(0), ghost->at(1), c1, c2, c3);
 				}
+				it++;
 			}
-			//updateMonster(*pinkys[0]);
-			//updateMonster(monster1);
-		//	updateMonster(monster2);
-			//updateMonster(monster3);
-			//updateMonster(monster4);
-			drawMonster(monster1[0], monster1[1], 0.0, 1.0, 1.0); //cyan
-			drawMonster(monster2[0], monster2[1], 1.0, 0.0, 0.0); //red
-			drawMonster(monster3[0], monster3[1], 1.0, 0.0, 0.6); //magenta
-			drawMonster(monster4[0], monster4[1], 1.0, 0.3, 0.0); //orange
+
+			//drawMonster(monster1[0], monster1[1], 0.0, 1.0, 1.0); //cyan
+			//drawMonster(monster2[0], monster2[1], 1.0, 0.0, 0.0); //red
+			//drawMonster(monster3[0], monster3[1], 1.0, 0.0, 0.6); //magenta
+			//drawMonster(monster4[0], monster4[1], 1.0, 0.3, 0.0); //orange
 		}
 		else {
 			resultsDisplay();
