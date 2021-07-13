@@ -326,26 +326,18 @@ void keyOperations() {
 void gameOver() {
 	int pacmanX = (int)(1.5 + xIncrement);
 	int pacmanY = (int)(1.5 + yIncrement);
-	int monster1X = (int)(monster1[0]);
-	int monster1Y = (int)(monster1[1]);
-	int monster2X = (int)(monster2[0]);
-	int monster2Y = (int)(monster2[1]);
-	int monster3X = (int)(monster3[0]);
-	int monster3Y = (int)(monster3[1]);
-	int monster4X = (int)(monster4[0]);
-	int monster4Y = (int)(monster4[1]);
-	if (pacmanX == monster1X && pacmanY == monster1Y) {
-		over = true;
+
+	for (auto list : all_ghosts) {					// Grab each set of instances
+		int z = 0;									// initialize counter to 0
+		for (auto ghost : *list) {					// for every ghost in each set
+			if (pacmanX == (int)(ghost->at(0)) &&	// pacmanX == ghostX
+				pacmanY == (int)(ghost->at(1))) {	// pacmanY == ghostY
+				list->erase(list->begin()+z);		// erase the ghost in the set located at z
+			}
+			z++;									// increment counter
+		}
 	}
-	if (pacmanX == monster2X && pacmanY == monster2Y) {
-		over = true;
-	}
-	if (pacmanX == monster3X && pacmanY == monster3Y) {
-		over = true;
-	}
-	if (pacmanX == monster4X && pacmanY == monster4Y) {
-		over = true;
-	}
+
 	if (points == 106) {
 		over = true;
 	}
@@ -452,10 +444,12 @@ void display() {
 			drawFood((1.5 + xIncrement) * squareSize, (1.5 + yIncrement) * squareSize);
 			drawPacman(1.5 + xIncrement, 1.5 + yIncrement, rotation);
 			
-			int it = 0; // 0, 1, 2, 3
-						// 0: 
+			int it = 0;
+
 			for (auto list : all_ghosts) {
+
 				float c1, c2, c3;
+
 				if (it == 0)		{ c1 = 0.0; c2 = 1.0; c3 = 1.0; } //set colors based on list 
 				else if (it == 1)	{ c1 = 1.0; c2 = 0.0; c3 = 0.0; }
 				else if (it == 2)	{ c1 = 1.0; c2 = 0.0; c3 = 0.6; }
@@ -465,13 +459,9 @@ void display() {
 					updateMonster(*ghost);
 					drawMonster(ghost->at(0), ghost->at(1), c1, c2, c3);
 				}
+
 				it++;
 			}
-
-			//drawMonster(monster1[0], monster1[1], 0.0, 1.0, 1.0); //cyan
-			//drawMonster(monster2[0], monster2[1], 1.0, 0.0, 0.0); //red
-			//drawMonster(monster3[0], monster3[1], 1.0, 0.0, 0.6); //magenta
-			//drawMonster(monster4[0], monster4[1], 1.0, 0.3, 0.0); //orange
 		}
 		else {
 			resultsDisplay();
