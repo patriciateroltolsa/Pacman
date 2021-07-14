@@ -40,7 +40,6 @@ array<float, 3> monster1 = { 10.5, 8.5, 1.0 }; //coordinates and direction of fi
 array<float, 3> monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
 array<float, 3> monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
 array<float, 3> monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
-array<float, 3> monster5 = { 2.5, 13.5, 4.0 };
 
 
 vector<array<float, 3>*> pinkys = { &monster1};
@@ -451,15 +450,12 @@ void duplicateGhosts() {
 	// Duplicate vector into itself
 	int count = 0;
 	int i = pinkys.size();
-
-	while (count < i) {
-
-		if (pinkys.size() <= 0)
+	array<float, 3>& temp = monster1;
+	for (auto monster : pinkys) {
+		if (count >= i)
 			break;
-
-		pinkys.push_back(&monster5);
+		pinkys.push_back(&temp);
 		count++;
-		count_ghosts++;
 	}
 }
 

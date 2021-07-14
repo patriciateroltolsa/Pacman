@@ -1,8 +1,8 @@
 ﻿  main.cpp
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(109,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(112,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(115,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(134,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(148,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(103,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(108,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(111,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(114,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jibra\Documents\TheForage\cppVaxMan\VaxManCPP\main.cpp(147,20): warning C4018: '<': signed/unsigned mismatch
   VaxManCPP.vcxproj -> C:\Users\jibra\Documents\TheForage\cppVaxMan\Debug\VaxManCPP.exe
