@@ -9,9 +9,9 @@
 
 // TODO:
 /*
-	1) Ghosts die when Vaxman touches them
+	1) Ghosts die when Vaxman touches them DONE
 	2) After n seconds, ghosts duplicate
-	3) Game ends if ghost count >= 128
+	3) Game ends if ghost count >= 128 DONE
 
 
 */
@@ -26,6 +26,7 @@
 #include <string>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <chrono>
 using namespace std;
 
 static bool replay = false; //check if starts a new game
@@ -47,6 +48,8 @@ vector<array<float, 3>*> clydes = { &monster4 };
 
 vector<vector<array<float,3>*>*> all_ghosts = { &pinkys, &blinkys, &inkys, &clydes };
 
+int count_ghosts = pinkys.size() + blinkys.size() + inkys.size() + clydes.size();
+
 
 static vector<int> border = { 0, 0, 15, 1, 15, 15, 14, 1, 0, 14, 15, 15, 1, 14, 0, 0 }; //coordinates of the border walls
 
@@ -59,8 +62,14 @@ static vector<vector<bool>> bitmap; // 2d image of which squares are blocked and
 bool* keyStates = new bool[256]; // record of all keys pressed 
 int points = 0; // total points collected
 
+auto start = chrono::steady_clock::now();
+
+double startTime;
+
+
 //Initializes the game with the appropiate information 
 void init(void) {
+	startTime = GetTickCount();
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
@@ -327,18 +336,20 @@ void gameOver() {
 	int pacmanX = (int)(1.5 + xIncrement);
 	int pacmanY = (int)(1.5 + yIncrement);
 
+
 	for (auto list : all_ghosts) {					// Grab each set of instances
 		int z = 0;									// initialize counter to 0
 		for (auto ghost : *list) {					// for every ghost in each set
 			if (pacmanX == (int)(ghost->at(0)) &&	// pacmanX == ghostX
 				pacmanY == (int)(ghost->at(1))) {	// pacmanY == ghostY
 				list->erase(list->begin()+z);		// erase the ghost in the set located at z
+				count_ghosts--;
 			}
 			z++;									// increment counter
 		}
 	}
 
-	if (points == 106) {
+	if (points == 106 || count_ghosts >= 128) {
 		over = true;
 	}
 }
@@ -427,7 +438,23 @@ void welcomeScreen() {
 }
 
 void duplicateGhosts() {
-
+	// TODO: SIMPLE
+	// for each ghost in (for collection in master)
+	// create a new ghost with coordinates that line up with: 
+	// monster1 = { 10.5, 8.5, 1.0 }; //coordinates and direction of first monster
+	// monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
+	// monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
+	// monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
+	// OR
+	// Duplicate vector into itself
+	int count = 0;
+	int i = pinkys.size();
+	array<float, 3> g_pinky = { 10.5, 8.5, 1.0 };
+	while (count < i) {
+		pinkys.push_back(&g_pinky);
+		count++;
+		count_ghosts++;
+	}
 }
 
 //Method to display the screen and its elements
@@ -440,6 +467,8 @@ void display() {
 	gameOver();
 	if (replay) {
 		if (!over) {
+			double currentTime = GetTickCount() - startTime;
+
 			drawLaberynth();
 			drawFood((1.5 + xIncrement) * squareSize, (1.5 + yIncrement) * squareSize);
 			drawPacman(1.5 + xIncrement, 1.5 + yIncrement, rotation);
@@ -461,6 +490,12 @@ void display() {
 				}
 
 				it++;
+			}
+			auto s = to_string(currentTime);
+			if (currentTime >= 1500) { // in MS
+				duplicateGhosts();
+				OutputDebugStringA("Time >= 1500");
+				startTime = GetTickCount();
 			}
 		}
 		else {
