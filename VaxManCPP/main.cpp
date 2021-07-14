@@ -28,6 +28,7 @@
 #include <math.h>
 #include <chrono>
 using namespace std;
+using Monster = array<float, 3>;
 
 static bool replay = false; //check if starts a new game
 static bool over = true; //check for the game to be over
@@ -41,13 +42,19 @@ array<float, 3> monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of se
 array<float, 3> monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
 array<float, 3> monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
 
-
 vector<array<float, 3>*> pinkys = { &monster1};
 vector<array<float, 3>*> blinkys = { &monster2 };
 vector<array<float, 3>*> inkys = { &monster3 };
 vector<array<float, 3>*> clydes = { &monster4 };
 
 vector<vector<array<float,3>*>*> all_ghosts = { &pinkys, &blinkys, &inkys, &clydes };
+
+vector<Monster> v_pinkys;
+vector<Monster> v_blinkys;
+vector<Monster> v_inkys;
+vector<Monster> v_clydes;
+
+vector<vector<Monster>> v_all_ghosts;
 
 int count_ghosts = pinkys.size() + blinkys.size() + inkys.size() + clydes.size();
 
@@ -70,6 +77,24 @@ double startTime;
 
 //Initializes the game with the appropiate information 
 void init(void) {
+
+	v_pinkys.push_back(Monster{ 10.5, 8.5, 1.0 });
+	v_blinkys.push_back(Monster{ 13.5, 1.5, 2.0 });
+	v_inkys.push_back(Monster{ 4.5, 6.5, 3.0 });
+	v_clydes.push_back(Monster{ { 2.5, 13.5, 4.0 } });
+
+	v_all_ghosts.push_back(v_pinkys);
+	v_all_ghosts.push_back(v_blinkys);
+	v_all_ghosts.push_back(v_inkys);
+	v_all_ghosts.push_back(v_clydes);
+
+
+
+
+
+
+
+
 	startTime = GetTickCount();
 	//clear screen
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -169,7 +194,7 @@ void drawPacman(float positionX, float positionY, float rotation) {
 }
 
 //Method to draw the monster character through consecutive circles algorithm
-void drawMonster(float positionX, float positionY, float r, float g, float b) {
+void drawMonster(float& positionX, float& positionY, float r, float g, float b) {
 	int x, y;
 	glBegin(GL_LINES);
 	glColor3f(r, g, b);
@@ -256,6 +281,64 @@ void updateMonster(array<float, 3>& monster) {
 	}
 }
 
+void v_updateMonster(Monster& monster) {
+	//find the current position of the monster
+	int x1Quadrant = (int)((monster[0] - (2 / squareSize)) - (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
+	int x2Quadrant = (int)((monster[0] + (2 / squareSize)) + (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
+	int y1Quadrant = (int)((monster[1] - (2 / squareSize)) - (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
+	int y2Quadrant = (int)((monster[1] + (2 / squareSize)) + (16.0 * cos(360 * M_PI / 180.0)) / squareSize);
+	//move him acording to its direction until he hits an obstacle
+	switch ((int)monster[2]) {
+	case 1:
+		if (!bitmap.at(x1Quadrant).at((int)monster[1])) {
+			monster[0] -= 2 / squareSize;
+		}
+		else {
+			int current = monster[2];
+			do {
+				monster[2] = (rand() % 4) + 1;
+			} while (current == (int)monster[2]);
+		}
+		break;
+	case 2:
+		if (!bitmap.at(x2Quadrant).at((int)monster[1])) {
+			monster[0] += 2 / squareSize;
+		}
+		else {
+			int current = monster[2];
+			do {
+				monster[2] = (rand() % 4) + 1;
+			} while (current == (int)monster[2]);
+		}
+		break;
+	case 3:
+		if (!bitmap.at((int)monster[0]).at(y1Quadrant)) {
+			monster[1] -= 2 / squareSize;
+		}
+		else {
+			int current = monster[2];
+			do {
+				monster[2] = (rand() % 4) + 1;
+			} while (current == (int)monster[2]);
+		}
+		break;
+	case 4:
+		if (!bitmap.at((int)monster[0]).at(y2Quadrant)) {
+			monster[1] += 2 / squareSize;
+		}
+		else {
+			int current = monster[2];
+			do {
+				monster[2] = (rand() % 4) + 1;
+			} while (current == (int)monster[2]);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+
 //Method to set the pressed key
 void keyPressed(unsigned char key, int x, int y) {
 	keyStates[key] = true;
@@ -338,19 +421,20 @@ void gameOver() {
 	int pacmanY = (int)(1.5 + yIncrement);
 
 
-	for (auto list : all_ghosts) {					// Grab each set of instances
+	for (auto& v : v_all_ghosts) {					// Grab each set of instances
 		int z = 0;									// initialize counter to 0
-		for (auto ghost : *list) {					// for every ghost in each set
-			if (pacmanX == (int)(ghost->at(0)) &&	// pacmanX == ghostX
-				pacmanY == (int)(ghost->at(1))) {	// pacmanY == ghostY
-				list->erase(list->begin()+z);		// erase the ghost in the set located at z
+		for (auto& ghost : v) {					// for every ghost in each set
+			if (pacmanX == (int)(ghost[0]) &&	// pacmanX == ghostX
+				pacmanY == (int)(ghost[1])) {	// pacmanY == ghostY
+				v.erase(v.begin()+z);		// erase the ghost in the set located at z
 				count_ghosts--;
 			}
 			z++;									// increment counter
 		}
 	}
 
-	if (points == 106 || count_ghosts >= 128) {
+	if (count_ghosts <= 0 || points == 106 || count_ghosts >= 128) {
+		points = 106;
 		over = true;
 	}
 }
@@ -439,22 +523,14 @@ void welcomeScreen() {
 }
 
 void duplicateGhosts() {
-	// TODO: SIMPLE
-	// for each ghost in (for collection in master)
-	// create a new ghost with coordinates that line up with: 
-	// monster1 = { 10.5, 8.5, 1.0 }; //coordinates and direction of first monster
-	// monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
-	// monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
-	// monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
-	// OR
-	// Duplicate vector into itself
+
 	int count = 0;
-	int i = pinkys.size();
-	array<float, 3>& temp = monster1;
-	for (auto monster : pinkys) {
+	int i = v_pinkys.size();
+	for (auto& monster : v_pinkys) {
 		if (count >= i)
 			break;
-		pinkys.push_back(&temp);
+		v_pinkys.push_back(Monster{ 10.5, 8.5, 1.0 });
+		OutputDebugStringA("pushed");
 		count++;
 	}
 }
@@ -477,7 +553,7 @@ void display() {
 			
 			int it = 0;
 
-			for (auto list : all_ghosts) {
+			for (auto& list : v_all_ghosts) {
 
 				float c1, c2, c3;
 
@@ -486,17 +562,17 @@ void display() {
 				else if (it == 2)	{ c1 = 1.0; c2 = 0.0; c3 = 0.6; }
 				else				{ c1 = 1.0; c2 = 0.3; c3 = 0.0; }
 
-				for (auto ghost : *list) {
-					updateMonster(*ghost);
-					drawMonster(ghost->at(0), ghost->at(1), c1, c2, c3);
+				for (auto& ghost : list) {
+					v_updateMonster(ghost);
+					drawMonster(ghost[0], ghost[1], c1, c2, c3);
 				}
 
 				it++;
 			}
 			auto s = to_string(currentTime);
-			if (currentTime >= 1500) { // in MS
+			if (currentTime >= 3000) { // in MS
 				duplicateGhosts();
-				OutputDebugStringA("Time >= 1500");
+				OutputDebugStringA("Time >= 3000");
 				startTime = GetTickCount();
 			}
 		}
