@@ -40,8 +40,10 @@ array<float, 3> monster1 = { 10.5, 8.5, 1.0 }; //coordinates and direction of fi
 array<float, 3> monster2 = { 13.5, 1.5, 2.0 }; //coordinates and direction of second monster
 array<float, 3> monster3 = { 4.5, 6.5, 3.0 }; //coordinates and direction of third monster
 array<float, 3> monster4 = { 2.5, 13.5, 4.0 }; //coordinates and direction of fourth monster
+array<float, 3> monster5 = { 2.5, 13.5, 4.0 };
 
-vector<array<float,3>*> pinkys = { &monster1 };
+
+vector<array<float, 3>*> pinkys = { &monster1};
 vector<array<float, 3>*> blinkys = { &monster2 };
 vector<array<float, 3>*> inkys = { &monster3 };
 vector<array<float, 3>*> clydes = { &monster4 };
@@ -449,9 +451,13 @@ void duplicateGhosts() {
 	// Duplicate vector into itself
 	int count = 0;
 	int i = pinkys.size();
-	array<float, 3> g_pinky = { 10.5, 8.5, 1.0 };
+
 	while (count < i) {
-		pinkys.push_back(&g_pinky);
+
+		if (pinkys.size() <= 0)
+			break;
+
+		pinkys.push_back(&monster5);
 		count++;
 		count_ghosts++;
 	}
