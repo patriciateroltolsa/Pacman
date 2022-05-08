@@ -65,11 +65,11 @@ void    PacMan::ft_incr_score()
     score += 100;
 }
 
-void    PacMan::ft_set_lives()
-{
+//void    PacMan::ft_set_lives()
+//{
 // CHANGE - Pacman is immortal
-    lives--;
-}
+//    lives--;
+//}
 
 PacMan::PacMan(int **map_i, QGraphicsPixmapItem **map_p, QGraphicsScene *sc)
 {

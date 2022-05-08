@@ -21,6 +21,8 @@ protected:
     int             y_dir[4] = { 0, 0, 1, -1 };
     PacMan          *pacman;
     QGraphicsScene  *scene;
+
+    bool            ghostIsDead;
 // CHANGE - Add flag to show that this ghost has been killed
 public:
     void            ft_clear_map();

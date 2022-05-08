@@ -4,6 +4,7 @@
 Ghost::Ghost()
 {
 // CHANGE - Original state is not dead
+    ghostIsDead = false;
 }
 
 void    Ghost::ft_set_default()
@@ -71,23 +72,15 @@ int     Ghost::ft_check_move(int i_pos, int j_pos)
 int        Ghost::ft_check_intersect()
 {
 // CHANGE - Pacman is immortal							
-    if (i_pos == pacman->ft_get_pacman_i() && j_pos == pacman->ft_get_pacman_j()
-            && !pacman->ft_scared_state())
-    {
-        ft_clear_map();
-        pacman->ft_set_defaut();
-        pacman->ft_set_lives();
-        return (1);
-    }
-    if (i_pos == pacman->ft_get_pacman_i() && j_pos == pacman->ft_get_pacman_j()
-            && pacman->ft_scared_state())
+    if (i_pos == pacman->ft_get_pacman_i() && j_pos == pacman->ft_get_pacman_j())
     {
         ft_clear_map();
         i_pos = 8;
         j_pos = 9;
 // CHANGE - No revival of this instance of a ghost		
-        this->setPos(j_pos * 32, i_pos * 32);
+        ghostIsDead = true;
         pacman->ft_incr_score();
+        emit ghostDiedSignal();
         return (1);
     }
     return (0);

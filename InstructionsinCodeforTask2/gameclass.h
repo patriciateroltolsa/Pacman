@@ -31,16 +31,19 @@ private:
     QGraphicsView                           *view;
     QGraphicsPixmapItem                     **map_pix;
     PacMan                                  *pacman;
-    Blinky                                  *blinky;
-    Pinky                                   *pinky;
-    Clyde                                   *clyde;
-    Inky                                    *inky;
+    Blinky                                  *blinky[128];
+    Pinky                                   *pinky[128];
+    Clyde                                   *clyde[128];
+    Inky                                    *inky[128];
+
     int                                     **map_int;
     QTimer                                  *timer_pacman;
-    QTimer                                  *timer_blinky;
-    QTimer                                  *timer_pinky;
-    QTimer                                  *timer_clyde;
-    QTimer                                  *timer_inky;
+    bool                                    gameOver = false;
+    QTimer                                  *timer_doubled_ghosts;
+    QTimer                                  *timer_blinky[128];
+    QTimer                                  *timer_pinky[128];
+    QTimer                                  *timer_clyde[128];
+    QTimer                                  *timer_inky[128];
 																// CHANGE - Add timer for doubling ghosts	
 // CHANGE - Add room for multiple ghosts, at most 128 when the game is over																
 public:
@@ -50,6 +53,10 @@ public:
     void                                    ft_roll_game();
     void                                    ft_create_map();
     int                                     ft_check_file_inp(std::string str);
+
+    void ft_set_game_over(bool gameOver);
+    void                                    ghostDouble();
+    void                                    ghostIsDead()
 // CHANGE - Add ghost doubling function																													   
 };
 
